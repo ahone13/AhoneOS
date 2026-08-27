@@ -1,0 +1,41 @@
+<!-- Gallery Window: View-Master intro splash + flip-through viewer -->
+<div class="viewmaster-window" id="viewmasterWindow">
+
+  <!-- ===== LAYER 1: Intro / splash screen ===== -->
+  <!-- Shown when the window first opens. Clicking "open" zooms
+       into the eyepiece and reveals the interactive viewer underneath. -->
+    <div class="intro-layer" id="introLayer">
+        <div class="intro-click-target" id="introClickTarget">
+            <img
+            src="assets/images/gallery/viewmaster-intro.png"
+            alt="A hand-drawn illustration of a View-Master toy. Click to open the gallery."
+            class="intro-illustration"
+            >
+            <img
+            src="assets/images/gallery-ui/click-arrow.png"
+            alt=""
+            class="click-arrow"
+            >
+        </div>
+    </div>
+
+  <!-- ===== LAYER 2: Interactive viewer (starts hidden) ===== -->
+  <div class="viewer-layer" id="viewerLayer">
+    <button class="back-btn" id="backBtn" aria-label="Back to intro">←</button>
+
+    <div class="viewmaster-body">
+        <div class="viewfinder" id="viewfinder">
+            <div class="viewfinder-vignette"></div>
+            <div class="media-stage" id="mediaStage">
+            <!-- img or video gets injected here by JS -->
+            </div>
+        </div>
+
+        <button class="lever-btn" id="leverBtn" aria-label="Click to see next photo">
+            <img src="assets/images/gallery-ui/lever-up.png" alt="" id="leverImg" class="lever-sprite">
+        </button>
+    </div>
+
+  </div>
+
+</div>

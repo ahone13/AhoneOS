@@ -1,0 +1,56 @@
+<div class="downloads-container">
+
+    <img src="assets/images/downloads/vine.png" class="vine-top" alt="">
+    <img src="assets/images/downloads/vine.png" class="vine-bottom" alt="">
+    <img src="assets/images/downloads/vine.png" class="vine-left" alt="">
+    <img src="assets/images/downloads/vine.png" class="vine-right" alt="">
+
+  <!-- Cabinet illustration — closed state -->
+  <div class="cabinet-wrapper">
+    <img src="assets/images/downloads/cabinet-closed.png" 
+         class="cabinet-img" id="cabinetClosed" alt="Filing Cabinet">
+
+    <!-- Drawer overlays — clickable zones on top of illustration -->
+    <div class="drawer-zone" id="drawer1" data-drawer="1">
+      <span class="drawer-label">Documents</span>
+    </div>
+    <div class="drawer-zone" id="drawer2" data-drawer="2">
+      <span class="drawer-label">Creative</span>
+    </div>
+    <div class="drawer-zone" id="drawer3" data-drawer="3">
+      <span class="drawer-label">Academic</span>
+    </div>
+  </div>
+
+  <!-- Open drawer view — shown when a drawer is clicked -->
+  <div class="drawer-open-view" id="drawerOpenView">
+
+    <div class="drawer-header">
+      <span class="drawer-open-label" id="drawerOpenLabel"></span>
+      <button class="drawer-close-btn" id="drawerCloseBtn">✕ close</button>
+    </div>
+
+    <img src="assets/images/downloads/drawer-open-folder.png"
+         class="drawer-img" id="drawerImg" alt="Open Drawer">
+
+    <!-- Files inside the drawer -->
+    <div class="drawer-files" id="drawerFiles">
+      <!-- populated by JS -->
+    </div>
+
+  </div>
+
+  <!-- Coming Soon Dialog -->
+  <div class="soon-dialog" id="soonDialog">
+    <div class="soon-dialog-inner">
+      <span class="soon-icon">😭</span>
+      <p class="soon-message">this file hasn't been uploaded to AhoneOS yet.</p>
+      <p class="soon-sub">check back later bestie</p>
+      <button class="soon-close" id="soonClose">ok fine 🙄</button>
+    </div>
+  </div>
+
+  <!-- Confetti -->
+  <div class="confetti-container" id="confettiContainer"></div>
+
+</div>

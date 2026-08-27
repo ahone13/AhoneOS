@@ -1,0 +1,292 @@
+/* =============================================
+   windows.css
+   Purpose: All styling for desktop windows —
+   title bar, body, buttons, shadow.
+   No behavior here. That lives in windows.js.
+   ============================================= */
+
+
+/* ----------------------------
+   BASE WINDOW
+   Every window shares these styles.
+   Position is controlled by JavaScript.
+   ---------------------------- */
+.window {
+  position: absolute;
+  /*
+    Absolute so JavaScript can place it anywhere
+    on the desktop by setting top/left values.
+  */
+  min-width: 320px;
+  min-height: 240px;
+  width: 480px;
+  height: 520px;
+
+  /* Pixel-style chunky border */
+  border: 3px solid var(--pixel-dark);
+
+  /* Layered box-shadow = pixel drop shadow effect */
+  box-shadow:
+    4px  4px  0px #1a1a2e,
+    8px  8px  0px rgba(26, 26, 46, 0.4);
+  /*
+    First shadow: solid dark offset = the chunky pixel edge
+    Second shadow: softer, further = slight depth behind it
+    Together they feel retro without being too heavy.
+  */
+
+  /* Hidden by default — JS adds 'active' to show it */
+  display: none;
+
+  /* Stack context for children */
+  z-index: 100;
+
+  /* Prevent text selection while dragging */
+  user-select: none;
+
+  background: var(--cream);
+
+  /* Subtle appear animation when window opens */
+  animation: window-appear 0.15s ease-out forwards;
+}
+
+@keyframes window-appear {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+  /*
+    Quick scale-up from slightly small to full size.
+    0.15s is fast enough to feel snappy, not sluggish.
+    Very Windows-era feel.
+  */
+}
+
+/* Window is visible when JS adds this class */
+.window.active {
+  display: flex;
+  flex-direction: column;
+  /*
+    Flex column so title bar stays at top,
+    content fills the rest naturally.
+  */
+}
+
+/* Brings window to front when clicked */
+.window.focused {
+  z-index: 200;
+  /*
+    When you click a window, JS adds 'focused'.
+    Higher z-index means it renders on top of other windows.
+  */
+}
+
+
+/* ----------------------------
+   TITLE BAR
+   The draggable top bar of each window.
+   Pink gradient + optional glitter overlay.
+   ---------------------------- */
+.window-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  height: 32px;
+  cursor: grab;
+  /*
+    cursor: grab shows the grab hand cursor —
+    signals to the user "you can drag this."
+    Changes to grabbing while actively dragging (set in JS).
+  */
+  border-bottom: 2px solid var(--pixel-dark);
+  position: relative;
+  overflow: hidden;
+  /*
+    overflow: hidden clips the glitter sparkles
+    so they don't spill outside the title bar.
+  */
+
+  /* Y2K pink gradient */
+  background:
+  /* Tiny sparkle dots scattered across */
+  radial-gradient(circle at 20% 50%, rgba(255,255,255,0.8) 1px, transparent 1px),
+  radial-gradient(circle at 75% 20%, rgba(255,255,255,0.9) 1px, transparent 1px),
+  radial-gradient(circle at 50% 80%, rgba(255,255,255,0.7) 1px, transparent 1px),
+  radial-gradient(circle at 85% 60%, rgba(255,255,255,0.8) 1px, transparent 1px),
+  radial-gradient(circle at 35% 25%, rgba(255,255,255,0.6) 1px, transparent 1px),
+  radial-gradient(circle at 60% 45%, rgba(255,255,255,0.9) 1px, transparent 1px),
+  radial-gradient(circle at 10% 75%, rgba(255,255,255,0.7) 1px, transparent 1px),
+  radial-gradient(circle at 90% 35%, rgba(255,255,255,0.8) 1px, transparent 1px),
+  /* Base pink gradient underneath */
+  linear-gradient(
+    135deg,
+    #FF85C2 0%,
+    #FF4DAE 25%,
+    #FF1493 50%,
+    #FF4DAE 75%,
+    #FF85C2 100%
+  );
+  /*
+    135deg = diagonal gradient, more dynamic than straight across.
+    Light pink → hot pink → deep pink → back = glossy feel.
+  */
+}
+
+/* Glitter effect — pure CSS sparkles on the title bar */
+.window-titlebar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.4) 40%,
+    rgba(255, 255, 255, 0.7) 50%,
+    rgba(255, 255, 255, 0.4) 60%,
+    transparent 80%
+  );
+  animation: glitter-sweep 3s ease-in-out infinite;
+  /*
+    A bright white streak sweeping across the title bar
+    repeatedly — simulates a glittery sheen. Very Y2K.
+  */
+}
+
+@keyframes glitter-sweep {
+  0%   { left: -100%; }
+  50%  { left: 150%; }
+  100% { left: 150%; }
+  /*
+    Sweeps from left to right, then pauses before repeating.
+    The pause (50%→100% both at 150%) means it only sweeps
+    once every 3 seconds, not constantly.
+  */
+}
+
+/* Small static sparkle dots on the title bar */
+.window-titlebar::after {
+  content: '✦ ✦ ✦';
+  position: absolute;
+  right: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 6px;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 4px;
+  pointer-events: none;
+}
+
+
+/* ----------------------------
+   WINDOW TITLE TEXT
+   ---------------------------- */
+.window-title {
+  font-family: var(--font-pixel);
+  font-size: 0.7rem;
+  color: white;
+  text-shadow:
+    1px 1px 0px rgba(0,0,0,0.4),
+    0px 0px 8px rgba(255,255,255,0.5);
+  /*
+    Dark shadow below for readability.
+    White glow behind for the glossy screen look.
+  */
+  letter-spacing: 1px;
+  z-index: 1;
+  /*
+    z-index: 1 keeps the title text above the
+    ::before glitter sweep pseudo-element.
+  */
+}
+
+
+/* ----------------------------
+   WINDOW CONTROL BUTTONS
+   The pixel-style close / minimise buttons.
+   ---------------------------- */
+.window-controls {
+  display: flex;
+  gap: 5px;
+  z-index: 1;
+}
+
+.window-btn {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.25);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  color: white;
+  font-weight: bold;
+  transition: background 0.1s;
+  /*
+    Tiny square buttons — very Windows 95/98 era.
+    Semi-transparent so the pink gradient shows through.
+  */
+}
+
+.window-btn:hover {
+  background: rgba(255,255,255,0.5);
+}
+
+/* Close button gets a slightly red tint on hover */
+.window-btn.close-btn:hover {
+  background: rgba(220, 50, 50, 0.6);
+}
+
+/* Maximized window — fills screen above taskbar */
+.window.maximized {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* ----------------------------
+   WINDOW CONTENT AREA
+   Where section content lives.
+   Scrollable independently of the desktop.
+   ---------------------------- */
+.window-content {
+  flex: 1;
+  /*
+    flex: 1 means "take up all remaining space
+    after the title bar." This is why we made
+    .window a flex column.
+  */
+  overflow-y: auto;
+  padding: 16px;
+  background: var(--cream);
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  color: var(--pixel-dark);
+
+  /* Custom scrollbar to match the aesthetic */
+  scrollbar-width: thin;
+  scrollbar-color: var(--pink-primary) var(--cream);
+}
+
+/* Chrome/Safari scrollbar styling */
+.window-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.window-content::-webkit-scrollbar-track {
+  background: var(--cream);
+  border-left: 1px solid var(--pixel-dark);
+}
+
+.window-content::-webkit-scrollbar-thumb {
+  background: var(--pink-primary);
+  border: 1px solid var(--pixel-dark);
+}

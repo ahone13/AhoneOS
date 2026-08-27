@@ -1,0 +1,242 @@
+/* =============================================
+   animations.css
+   Purpose: Grass, flowers, wind particles —
+   all the living environment on the desktop.
+   ============================================= */
+
+
+/* ----------------------------
+   GRASS CONTAINER
+   Sits at the very top of the ground div,
+   right along the horizon line.
+   ---------------------------- */
+.grass-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /*
+    Instead of a fixed 60px strip at the horizon,
+    now it fills the entire ground div.
+  */
+  pointer-events: none;
+  overflow: hidden;
+}
+
+
+/* ----------------------------
+   INDIVIDUAL GRASS BLADE
+   A tall thin shape with a pointed tip,
+   created entirely with CSS.
+   ---------------------------- */
+.grass-blade {
+  position: absolute;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(
+    to top,
+    #2D6A2D,    /* dark base — in shadow near ground */
+    #4CAF50,    /* mid green */
+    #7BC67E     /* lighter tip — catches light */
+  );
+  border-radius: 40% 40% 0 0 / 100% 100% 0 0;
+  /*
+    This border-radius formula creates the pointed
+    grass blade tip. Breaking it down:
+    
+    border-radius: horizontal / vertical
+    40% 40% 0 0 = top-left, top-right, bottom-right, bottom-left
+    100% 100% 0 0 = same corners but vertical radius
+    
+    The top corners get a strong curve that tapers
+    to a point — like a real grass blade.
+  */
+  transform-origin: bottom center;
+  /*
+    transform-origin defines the PIVOT POINT for rotation.
+    "bottom center" means the blade rotates from its base,
+    just like real grass bending in wind.
+    Without this, it would rotate from its center — wrong.
+  */
+  animation: grass-sway var(--sway-duration, 3s) ease-in-out infinite alternate;
+  /*
+    var(--sway-duration, 3s) uses a CSS variable we'll set
+    individually on each blade via JavaScript.
+    The fallback is 3s if the variable isn't set.
+    "alternate" means it plays forward then backward —
+    sways left then right continuously.
+  */
+  animation-delay: var(--sway-delay, 0s);
+}
+
+@keyframes grass-sway {
+  0% {
+    transform: rotate(var(--sway-left, -3deg));
+  }
+  100% {
+    transform: rotate(var(--sway-right, 3deg));
+  }
+  /*
+    Each blade gets its own --sway-left and --sway-right
+    values set by JavaScript. This means every blade
+    sways a different amount — organic, not robotic.
+  */
+}
+
+
+/* ----------------------------
+   FLOWERS CONTAINER
+   ---------------------------- */
+.flowers-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+
+/* ----------------------------
+   FLOWER
+   Each flower is a wrapper containing
+   a stem and a head (petals).
+   ---------------------------- */
+.flower {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: bottom center;
+  animation: flower-bob var(--bob-duration, 4s) ease-in-out infinite alternate;
+  animation-delay: var(--bob-delay, 0s);
+}
+
+@keyframes flower-bob {
+  0%   { transform: rotate(-2deg); }
+  100% { transform: rotate(2deg); }
+  /*
+    Flowers bob more gently than grass —
+    smaller rotation range feels more natural
+    for a heavier flower head on a stem.
+  */
+}
+
+.flower-stem {
+  width: 2px;
+  background: linear-gradient(to top, #2D6A2D, #4CAF50);
+  border-radius: 1px;
+  /*
+    Height is set individually by JavaScript
+    so flowers are different heights.
+  */
+}
+
+.flower-head {
+  width: var(--flower-size, 8px);
+  height: var(--flower-size, 8px);
+  border-radius: 50%;
+  /*
+    border-radius: 50% = perfect circle.
+    Color is set by JavaScript — different flowers
+    get different colors (pink, white, yellow, purple).
+  */
+  background: var(--flower-color, #FFB6C1);
+  position: relative;
+  box-shadow: 0 0 4px rgba(255,255,255,0.4);
+  /*
+    Subtle white glow makes the flower heads
+    look soft and luminous.
+  */
+}
+
+/* Petals using pseudo-elements */
+.flower-head::before,
+.flower-head::after {
+  content: '';
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  background: inherit;
+  /*
+    background: inherit copies the flower color.
+    These are the petal "blobs" around the center.
+  */
+  opacity: 0.8;
+}
+
+.flower-head::before {
+  top: -40%;
+  left: 20%;
+  /*
+    Positions one petal above the center.
+  */
+}
+
+.flower-head::after {
+  top: 20%;
+  left: -40%;
+  /*
+    Positions one petal to the left of center.
+  */
+}
+
+
+/* ----------------------------
+   WIND PARTICLES
+   Tiny pollen/dust dots that drift
+   across the screen slowly.
+   ---------------------------- */
+.wind-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  animation: particle-drift var(--drift-duration, 8s) linear infinite;
+  animation-delay: var(--drift-delay, 0s);
+  opacity: 0;
+  /*
+    Start invisible — the animation fades them in
+    and out as they drift across the screen.
+  */
+}
+
+@keyframes particle-drift {
+  0% {
+    transform: translateX(0) translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--particle-opacity, 0.4);
+    /*
+      Fade in quickly after starting.
+    */
+  }
+  90% {
+    opacity: var(--particle-opacity, 0.4);
+  }
+  100% {
+    transform: translateX(var(--drift-x, 200px)) translateY(var(--drift-y, -80px));
+    opacity: 0;
+    /*
+      Drift rightward and slightly upward,
+      then fade out at the end.
+      --drift-x and --drift-y are set by JS
+      so each particle goes a different distance.
+    */
+  }
+}

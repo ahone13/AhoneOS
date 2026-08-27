@@ -1,0 +1,87 @@
+/* =============================================
+   reset.css
+   Purpose: Remove all browser default styles.
+   Rule: Never put visual design in here.
+         This file only REMOVES things.
+   ============================================= */
+
+/* 
+  The asterisk * means "select EVERY element on the page."
+  box-sizing: border-box is the single most important CSS rule
+  you can set globally. Here's why:
+  
+  By default, if you say an element is 200px wide and then add
+  20px of padding, the element becomes 220px wide. That's
+  counterintuitive and breaks layouts constantly.
+  
+  border-box changes the math: padding is included INSIDE
+  the width. So 200px stays 200px, no matter what padding you add.
+*/
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+  html and body together fill the full screen.
+  height: 100% means "as tall as the viewport (the browser window)."
+  We need this or the desktop won't fill the screen.
+*/
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  /*
+    overflow: hidden hides any content that spills outside
+    the screen. Important for a desktop OS feel —
+    no scrollbars on the main page.
+  */
+}
+
+/*
+  Remove default list bullet points.
+  We'll use <ul> and <li> for our desktop icons later
+  but we don't want the browser's default dots.
+*/
+ul, ol {
+  list-style: none;
+}
+
+/*
+  Remove underlines from links by default.
+  We'll add our own styling when we need it.
+*/
+a {
+  text-decoration: none;
+  color: inherit;
+  /*
+    color: inherit means "use whatever color your parent element has"
+    instead of the browser's default blue link color.
+  */
+}
+
+/*
+  Make images behave like block elements and never
+  overflow their container. Essential for responsive design.
+*/
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/*
+  Remove default button styling. Browsers make buttons
+  look very different from each other. We zero them out
+  so we can style them ourselves.
+*/
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  /*
+    font: inherit is important — by default, buttons
+    don't inherit your page's font. This fixes that.
+  */
+}

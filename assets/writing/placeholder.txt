@@ -1,0 +1,5 @@
+This is a placeholder paragraph. Replace this whole file with your actual piece.
+
+Each paragraph just needs a blank line between it and the next one — that's literally the only formatting rule. No special syntax, no code.
+
+Add a new piece by creating a new .txt file here, then adding one small entry to writingData in writing.js pointing to it.

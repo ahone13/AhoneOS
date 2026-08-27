@@ -1,0 +1,22 @@
+/* =============================================
+   coding.css
+   Purpose: Column layout for Coding Projects
+   explorer. Shares base explorer/context-menu/
+   properties/readme styles with academic.css —
+   only the grid columns differ (6 cols, not 7).
+============================================= */
+
+#window-coding .explorer-header,
+#window-coding .explorer-row {
+  grid-template-columns: 2fr 1fr 0.9fr 2fr 0.6fr 0.7fr;
+  /*
+    Name / Stack / Status / Vibe / Year / Link
+    Scoped to #window-coding so it doesn't affect
+    Academic Projects' 7-column layout.
+  */
+}
+
+.col-link {
+  color: var(--pink-primary, #ff5fa2);
+  text-align: center;
+}

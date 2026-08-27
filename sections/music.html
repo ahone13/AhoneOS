@@ -1,0 +1,97 @@
+<div class="music-container">
+
+    <img src="assets/images/music/headphones.png" class="decor-headphones" alt="">
+  <!-- WALKMAN -->
+  <div class="walkman" id="walkman">
+
+    <!-- Walkman body -->
+    <div class="walkman-body">
+
+      <!-- Screen -->
+      <div class="walkman-screen">
+        <div class="screen-text" id="screenText">♪ No CD inserted</div>
+        <div class="screen-sub" id="screenSub">INSERT MEDIA TO PLAY</div>
+        <div class="cd-slot" id="cdSlot">
+          <!-- loaded CD appears here -->
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="walkman-controls">
+        <button class="ctrl-btn" id="btnPrev">⏮</button>
+        <button class="ctrl-btn play-btn" id="btnPlay">▶</button>
+        <button class="ctrl-btn" id="btnNext">⏭</button>
+        <button class="ctrl-btn eject-btn" id="btnEject">⏏</button>
+      </div>
+
+      <div id="spotifyEmbed"></div>
+
+    </div>
+
+  </div>
+
+  <!-- CD COLLECTION -->
+  <div class="cd-collection">
+    <div class="cd-grid" id="cdGrid">
+
+        <div class="cd-item" data-id="mc">
+            <img src="assets/images/music/cd-mc.png" class="cd-disc-img" alt="MC syndrome">
+        </div>
+
+        <div class="cd-item" data-id="rainy">
+            <img src="assets/images/music/cd-rainy.png" class="cd-disc-img" alt="rainy bus rides">
+        </div>
+
+        <div class="cd-item" data-id="dance">
+            <img src="assets/images/music/cd-dance.png" class="cd-disc-img" alt="just dance fr">
+        </div>
+
+        <div class="cd-item" data-id="cvnt">
+            <img src="assets/images/music/cd-cvnt.png" class="cd-disc-img" alt="cvntessential">
+        </div>
+
+        <div class="cd-item" data-id="237">
+            <img src="assets/images/music/cd-237.png" class="cd-disc-img" alt="+237">
+        </div>
+
+        <div class="cd-item" data-id="baguette">
+            <img src="assets/images/music/cd-baguette.png" class="cd-disc-img" alt="baguette">
+        </div>
+
+        <div class="cd-item" data-id="afro">
+            <img src="assets/images/music/cd-afro.png" class="cd-disc-img" alt="afrobeats">
+        </div>
+
+        <div class="cd-item" data-id="anime">
+            <img src="assets/images/music/cd-anime.png" class="cd-disc-img" alt="anime">
+        </div>
+
+    </div>
+  </div>
+
+
+  <!-- CD INFO CARD — pops up when CD is clicked -->
+  <div class="cd-card" id="cdCard">
+    <div class="cd-card-inner">
+      <div class="cd-card-header" id="cdCardHeader"></div>
+      <div class="cd-card-body">
+        <p class="cd-mood" id="cdMood"></p>
+        <p class="cd-desc" id="cdDesc"></p>
+        <p class="cd-damage" id="cdDamage"></p>
+      </div>
+      <div class="cd-card-actions">
+        <button class="cd-card-btn nope" id="cdNope">Nope</button>
+        <button class="cd-card-btn insert" id="cdInsert">Insert CD 💿</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EJECT EASTER EGG -->
+  <div class="eject-msg" id="ejectMsg">
+    You've released the music goblins. Good luck.
+  </div>
+
+    <img src="assets/images/music/note-green.png" class="decor-note note-1" alt="">
+    <img src="assets/images/music/note-pink.png" class="decor-note note-2" alt="">
+    <img src="assets/images/music/note-black.png" class="decor-note note-3" alt="">
+</div>

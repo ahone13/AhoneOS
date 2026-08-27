@@ -1,0 +1,354 @@
+/* =============================================
+   desktop.css
+   Purpose: The wallpaper, desktop layout, and
+   the permanent AhoneOS logo on screen.
+   ============================================= */
+
+/* Add this at the very top of desktop.css, before :root */
+@font-face {
+  font-family: 'VCR';
+  src: url('../assets/fonts/VCR_OSD_MONO_1.001.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Bratz';
+  src: url('../assets/fonts/FUNKHOUS.ttf') format('truetype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Bratz';
+  src: url("../assets/fonts/KEnaN & keL.ttf") format('truetype');
+  font-weight: bold;
+}
+
+/* ----------------------------
+   DESIGN TOKENS (CSS Variables)
+   Your entire color palette lives here.
+   Change one value = changes everywhere.
+   ---------------------------- */
+:root {
+  /* Sky colors — pulled from your pixel art references */
+  --sky-top:        #5BA3D9;   /* deeper blue at top */
+  --sky-bottom:     #A8D8F0;   /* lighter blue near horizon */
+
+  /* Ground colors */
+  --grass-light:    #6DBF4A;   /* sunlit grass */
+  --grass-mid:      #4A9E2F;   /* mid grass */
+  --grass-dark:     #2D6A2D;   /* shadowed grass / hill edge */
+  --grass-shadow:   #1E4D1E;   /* darkest shadow strip */
+
+  /* Brand / UI colors */
+  --pink-primary:   #FF6EB4;   /* main Y2K pink */
+  --pink-light:     #FFB6C1;   /* soft pink for hovers */
+  --pink-glow:      #FF1493;   /* deep pink for glow effects */
+  --cream:          #FFF8F0;   /* window backgrounds */
+  --pixel-dark:     #1a1a2e;   /* borders and outlines */
+
+  /* Font stack — placeholder until we find your perfect font */
+  --font-pixel: 'Courier New', monospace;  
+  --font-ui:        'Segoe UI', Arial, sans-serif;
+}
+
+
+/* ----------------------------
+   DESKTOP CONTAINER
+   This is the full-screen OS desktop.
+   Everything sits inside this div.
+   ---------------------------- */
+.desktop {
+  width: 100vw;
+  /*
+    vw = viewport width. 100vw = full browser window width.
+    vh = viewport height. 100vh = full browser window height.
+    These are more reliable than 100% for full-screen layouts.
+  */
+  height: 100vh;
+  position: relative;
+  /*
+    position: relative here is important. It makes .desktop
+    the "anchor point" for anything inside it that uses
+    position: absolute. We'll use this for icons and windows.
+  */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /*
+    Flexbox with column direction stacks children vertically.
+    Sky on top, ground on bottom.
+  */
+}
+
+
+/* ----------------------------
+   SKY LAYER
+   Takes up the top 60% of the screen.
+   ---------------------------- */
+.sky {
+  flex: 0 0 60%;
+  /*
+    flex: 0 0 60% means:
+    - don't grow beyond 60%
+    - don't shrink below 60%
+    - start at exactly 60% of the parent height
+  */
+  background: linear-gradient(
+    to bottom,
+    var(--sky-top) 0%,
+    var(--sky-bottom) 100%
+  );
+  /*
+    linear-gradient creates a smooth color transition.
+    "to bottom" = top to bottom direction.
+    Deeper blue at top, lighter near the horizon — just like
+    your pixel art references.
+  */
+  position: relative;
+}
+
+
+/* ----------------------------
+   GROUND LAYER
+   Takes up the bottom 40% of the screen.
+   Has a pixel-style layered hill effect.
+   ---------------------------- */
+.ground {
+  flex: 0 0 40%;
+  position: relative;
+  background: var(--grass-light);
+  /*
+    We use box-shadow trick to create pixel-art style
+    color banding — multiple horizontal strips that suggest
+    depth and shadow, like your Windows XP pixelated reference.
+  */
+  background: linear-gradient(
+    to bottom,
+    var(--grass-light)  0%,
+    var(--grass-mid)   40%,
+    var(--grass-dark)  75%,
+    var(--grass-shadow) 100%
+  );
+}
+
+/*
+  The hill curve effect — a pseudo-element.
+  ::before means "insert a virtual element BEFORE
+  the content of .ground, but still inside it."
+  We use this to create the curved hilltop without
+  adding extra HTML.
+*/
+.ground::before {
+  content: '';
+  /*
+    content: '' is required for pseudo-elements to appear.
+    It can be empty — we're using it purely for visual shape.
+  */
+  position: absolute;
+  top: -18px;
+  left: -5%;
+  width: 110%;
+  height: 40px;
+  background: var(--grass-light);
+  border-radius: 50% 60% 0 0;
+  /*
+    border-radius on just the top two corners creates
+    the gentle hill curve at the horizon line.
+  */
+}
+
+
+/* ----------------------------
+   OS LOGO
+   ---------------------------- */
+.os-logo {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 10;
+  user-select: none;
+  text-align: center;
+}
+
+.logo-img {
+  width: clamp(280px, 50vw, 650px);
+  height: auto;
+  /*
+    clamp keeps it responsive —
+    never smaller than 200px,
+    never bigger than 500px,
+    ideally 40% of viewport width.
+  */
+  animation: logo-pulse 3s ease-in-out infinite;
+  filter: drop-shadow(0px 0px 20px rgba(255, 20, 147, 0.4));
+  /*
+    drop-shadow on a PNG respects transparency —
+    the glow follows the actual logo shape,
+    not a rectangle around it.
+  */
+  image-rendering: pixelated;
+  /*
+    If the logo is pixel art, keep edges crisp.
+    If it's not pixel art, remove this line.
+  */
+}
+
+.logo-subtitle {
+  font-family: var(--font-pixel);
+  font-size: clamp(0.6rem, 1.5vw, 0.85rem);
+  color: #9B59B6;
+  font-style: italic;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-top: 6px;
+  text-align: center;
+  text-shadow: 0px 0px 10px rgba(155, 89, 182, 0.5);
+}
+
+/* ----------------------------
+   CRT SCANLINES OVERLAY
+   Sits over the entire desktop.
+   Flickers periodically to simulate
+   an old CRT monitor.
+   ---------------------------- */
+.desktop-scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  /*
+    pointer-events: none is critical here —
+    this layer sits on top of everything visually,
+    but all clicks pass straight through it.
+    Without this, nothing on the desktop would be clickable.
+  */
+  z-index: 9000;
+  /*
+    High z-index so it sits above the desktop and icons,
+    but below the boot screen (which is 9999).
+  */
+
+  /* The scanline pattern — same technique as the boot screen */
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 0, 0, 0.12) 3px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+
+  /* 
+    Two animations running simultaneously, separated by comma.
+    This is how you layer multiple animations on one element.
+  */
+  animation:
+    scanline-flicker 8s ease-in-out infinite,
+    scanline-drift 12s linear infinite;
+  /*
+    scanline-flicker: the opacity pulsing in and out
+    scanline-drift: the lines slowly moving downward
+    Different durations means they never sync up perfectly —
+    feels organic rather than mechanical.
+  */
+}
+
+@keyframes scanline-flicker {
+  /*
+    Mostly invisible, with brief moments of visibility.
+    This is what makes it feel "occasional" not constant.
+  */
+  0%   { opacity: 0; }
+  5%   { opacity: 0.9; }
+  10%  { opacity: 0.2; }
+  50%  { opacity: 0; }
+  52%  { opacity: 1; }
+  54%  { opacity: 0.1; }
+  80%  { opacity: 0; }
+  83%  { opacity: 0.85; }
+  86%  { opacity: 0; }
+  100% { opacity: 0; }
+  /*
+    Notice most keyframes are opacity: 0.
+    The scanlines are invisible 90% of the time,
+    then flash briefly — exactly like a real CRT.
+  */
+}
+
+@keyframes scanline-drift {
+  /*
+    background-position moves the repeating gradient pattern.
+    This makes the lines appear to slowly roll downward.
+  */
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 100px; }
+}
+
+
+/* ----------------------------
+   OCCASIONAL SCREEN GLITCH
+   A very subtle horizontal shift
+   that happens even more rarely.
+   ---------------------------- */
+.desktop-scanlines::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  animation: screen-glitch 15s ease-in-out infinite;
+  opacity: 0;
+}
+
+@keyframes screen-glitch {
+  /*
+    translateX shifts the element horizontally.
+    A tiny shift + brief opacity = subtle glitch flash.
+    Happens once every 15 seconds.
+  */
+  0%,
+  90%  { opacity: 0; transform: translateX(0); }
+  91%  { opacity: 0.7; transform: translateX(-4px); }
+  92%  { opacity: 0.4; transform: translateX(5px); }
+  93%  { opacity: 0.7; transform: translateX(-3px); }
+  94%  { opacity: 0; transform: translateX(0); }
+  100% { opacity: 0; }
+}
+
+/* ----------------------------
+   LOGO PULSE
+   Gentle breathing animation on
+   the AhoneOS logo. Subtle — like
+   a heartbeat, not a strobe.
+   ---------------------------- */
+.logo-halo-wrapper {
+  animation: logo-pulse 3s ease-in-out infinite;
+}
+
+@keyframes logo-pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+  /*
+    scale(1.04) = 4% bigger at peak.
+    Subtle enough to feel alive,
+    not distracting.
+    3s duration = slow, breathing rhythm.
+  */
+}
+
+/* ----------------------------
+   CUSTOM CURSORS
+   body {
+      cursor: url('../assets/images/cursors/hand-plain.png') 16 0, auto;
+    }
+
+    a, button, .desktop-icon, .explorer-row,
+    .contact-card, .window-btn, .facts-tab {
+      cursor: url('../assets/images/cursors/hand-click.png') 16 0, pointer;
+    }
+   ---------------------------- */

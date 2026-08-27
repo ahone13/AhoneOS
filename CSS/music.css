@@ -1,0 +1,466 @@
+/* =============================================
+   music.css
+   Purpose: Walkman music player window.
+============================================= */
+
+.music-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 16px 0 0 0;
+  /* remove left/right padding so pegboard touches edges */
+  position: relative;
+}
+
+/* ----------------------------
+   WALKMAN
+   Pure CSS portable music player.
+   ---------------------------- */
+.walkman {
+  display: flex;
+  justify-content: center;
+}
+
+.walkman-body {
+  width: 280px;
+  background: linear-gradient(145deg, #e8e0d5, #d4c9b8);
+  border: 3px solid var(--pixel-dark);
+  border-radius: 16px 16px 24px 24px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow:
+    4px 4px 0px var(--pixel-dark),
+    inset 0 2px 4px rgba(255,255,255,0.5);
+  /*
+    inset shadow creates the raised plastic feel.
+    The offset shadow creates the retro depth.
+  */
+}
+
+/* ----------------------------
+   SCREEN
+   ---------------------------- */
+.walkman-screen {
+  background: #1a2a1a;
+  border: 2px solid var(--pixel-dark);
+  border-radius: 8px;
+  padding: 10px;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  position: relative;
+  /*
+    Dark green — classic LCD screen color.
+  */
+}
+
+.screen-text {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  color: #7FFF00;
+  /*
+    Chartreuse green = authentic LCD display color.
+  */
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.screen-sub {
+  font-family: var(--font-pixel);
+  font-size: 0.4rem;
+  color: #4CAF50;
+  letter-spacing: 2px;
+  opacity: 0.7;
+}
+
+.cd-slot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-top: 6px;
+  display: none;
+  /*
+    Hidden until a CD is inserted.
+    Shows a mini version of the loaded CD.
+  */
+  border: 2px solid rgba(255,255,255,0.2);
+  position: relative;
+  animation: cd-spin 3s linear infinite;
+}
+
+.cd-slot.active {
+  display: block;
+}
+
+.cd-slot-hole {
+  width: 10px;
+  height: 10px;
+  background: #1a2a1a;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes cd-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+  /*
+    CD spins while playing — classic Walkman feel.
+  */
+}
+
+
+/* ----------------------------
+   CONTROLS
+   ---------------------------- */
+.walkman-controls {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ctrl-btn {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--pixel-dark);
+  border-radius: 50%;
+  background: linear-gradient(145deg, #d4c9b8, #c4b9a8);
+  font-size: 0.7rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s, box-shadow 0.1s;
+  box-shadow: 2px 2px 0px var(--pixel-dark);
+}
+
+.ctrl-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0px var(--pixel-dark);
+}
+
+.ctrl-btn:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0px var(--pixel-dark);
+}
+
+.play-btn {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(145deg, #FF6EB4, #FF1493);
+  color: white;
+  font-size: 0.9rem;
+}
+
+.eject-btn {
+  font-size: 0.6rem;
+  background: linear-gradient(145deg, #e8e0d5, #c4b9a8);
+}
+
+
+/* ----------------------------
+   CD COLLECTION
+   ---------------------------- */
+.collection-title {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: #888;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.cd-grid {
+  display: grid; /* this was missing! */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 8px;
+  padding-top: 45px;
+}
+
+/* ----------------------------
+   PEGBOARD BACKGROUND
+   ---------------------------- */
+.cd-collection {
+  background-image: url('../assets/images/music/pegboard.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border: none;
+  /* remove border — the pegboard image has its own border */
+  padding: 20px;
+  min-height: 280px;
+  /*
+    Give it a minimum height so the pegboard
+    has enough room to display properly.
+  */
+}
+
+/* ----------------------------
+   DECORATIVE ELEMENTS
+   ---------------------------- */
+.music-decor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 8px 0;
+  position: relative;
+}
+
+.decor-headphones {
+  width: 250px;
+  height: auto;
+  display: block;
+  margin: 0 auto 8px auto;
+  image-rendering: pixelated;
+  animation: headphones-bob 3s ease-in-out infinite;
+}
+
+@keyframes headphones-bob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-4px); }
+  /*
+    Gentle floating animation —
+    like the headphones are bouncing
+    to the music.
+  */
+}
+
+.decor-note {
+  position: absolute;
+  image-rendering: pixelated;
+  pointer-events: none;
+  animation: note-float 2s ease-in-out infinite alternate;
+}
+
+.note-1 {
+  width: 24px;
+  top: 15%;
+  right: 8%;
+  animation-delay: 0s;
+}
+
+.note-2 {
+  width: 28px;
+  top: 45%;
+  left: 5%;
+  animation-delay: 0.6s;
+}
+
+.note-3 {
+  width: 20px;
+  bottom: 20%;
+  right: 12%;
+  animation-delay: 1.2s;
+}
+
+@keyframes note-float {
+  from { transform: translateY(0) rotate(-5deg); }
+  to   { transform: translateY(-8px) rotate(5deg); }
+  /*
+    Notes drift up and down with a slight tilt —
+    like they're floating off the CDs.
+  */
+}
+
+.cd-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+  margin-bottom: 16px;
+  /*
+    Added margin-bottom for breathing room between rows.
+  */
+}
+
+.cd-item:hover .cd-disc {
+  transform: translateY(-4px) rotate(5deg);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+/* ----------------------------
+   CD DISC
+   Pure CSS circle with hole.
+   ---------------------------- */
+.cd-disc {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid rgba(0,0,0,0.2);
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+  /*
+    The background gradient is set inline per CD —
+    each one has its own color identity.
+  */
+}
+
+.cd-hole {
+  width: 14px;
+  height: 14px;
+  background: var(--cream);
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.2);
+  position: absolute;
+  /*
+    The center hole of the CD.
+    Uses cream background to "cut through"
+    the disc visually.
+  */
+}
+
+.cd-label {
+  position: static;
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  color: var(--pixel-dark);
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+  text-align: center;
+  text-shadow: none;
+}
+
+.cd-disc-img {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cd-item:hover .cd-disc-img {
+  transform: translateY(-4px) rotate(5deg);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+
+/* ----------------------------
+   CD INFO CARD
+   Pops up when a CD is clicked.
+   ---------------------------- */
+.cd-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  width: 260px;
+  background: #fffdf7;
+  border: 3px solid var(--pixel-dark);
+  box-shadow: 6px 6px 0px var(--pixel-dark);
+  z-index: 9000;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s;
+}
+
+.cd-card.visible {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.cd-card-header {
+  padding: 12px;
+  font-family: var(--font-pixel);
+  font-size: 0.7rem;
+  color: white;
+  letter-spacing: 2px;
+  border-bottom: 2px solid var(--pixel-dark);
+  /*
+    Background color set by JS to match the CD.
+  */
+}
+
+.cd-card-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cd-mood, .cd-desc, .cd-damage {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  color: #444;
+  line-height: 1.7;
+  letter-spacing: 0.3px;
+}
+
+.cd-damage {
+  color: var(--pink-primary);
+  font-style: italic;
+}
+
+.cd-card-actions {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  border-top: 1px solid #eee;
+  justify-content: flex-end;
+}
+
+.cd-card-btn {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  padding: 6px 12px;
+  border: 2px solid var(--pixel-dark);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.1s;
+}
+
+.cd-card-btn.nope {
+  background: #f0f0f0;
+  color: #888;
+}
+
+.cd-card-btn.nope:hover { background: #e0e0e0; }
+
+.cd-card-btn.insert {
+  background: var(--pink-primary);
+  color: white;
+}
+
+.cd-card-btn.insert:hover { background: var(--pink-glow); }
+
+
+/* ----------------------------
+   EJECT EASTER EGG
+   ---------------------------- */
+.eject-msg {
+  position: fixed;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: white;
+  background: var(--pixel-dark);
+  padding: 8px 16px;
+  border: 2px solid var(--pink-primary);
+  letter-spacing: 1px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 9999;
+  white-space: nowrap;
+}
+
+.eject-msg.visible {
+  opacity: 1;
+}

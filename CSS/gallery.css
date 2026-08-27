@@ -1,0 +1,236 @@
+/* ============================================
+   GALLERY WINDOW — View-Master intro + viewer
+   Swap placeholder colors below for your real
+   CSS custom properties once you've got the names.
+   ============================================ */
+
+.viewmaster-window {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-ui, "VCR OSD Mono", monospace);
+}
+
+/* ============================================
+   LAYER 1: Intro / splash
+   ============================================ */
+
+.intro-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  z-index: 2;
+
+  /* This is the "zoom into the eyes" effect.
+     transform-origin sits dead center because that's
+     where the eyepieces are in the illustration. */
+  transform-origin: center center;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* Added by JS when "open" is clicked */
+.intro-layer.is-zooming {
+  opacity: 0;
+  transform: scale(2.6);
+  pointer-events: none; /* so it can't be clicked again mid-fade */
+}
+
+.intro-illustration {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 80%;
+  display: block;
+  /* If your PNG has a flattened white background instead of
+     transparency, this box-shadow trick can make it look like
+     an intentional card rather than a stray white box.
+     Delete if your PNG is properly transparent. */
+  /* box-shadow: 0 8px 24px rgba(0,0,0,0.15); */
+}
+
+.intro-click-target {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  margin-left: 70px;
+}
+
+.click-arrow {
+  position: absolute;
+  bottom: -60px;    /* was -10px — pulls it up, closer to the illustration */
+  right: 170px;    /* was -60px — pulls it left, closer to the illustration */
+  width: 220px;
+  height: auto;
+  pointer-events: none;
+}
+
+.open-btn {
+  font-family: inherit;
+  background: var(--pink-primary, #ff2fd6);
+  color: #fff;
+  border: 3px solid #000;
+  padding: 8px 28px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 4px;
+  box-shadow: 3px 3px 0 #000;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.open-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #000;
+}
+
+/* ============================================
+   LAYER 2: Interactive viewer
+   Starts invisible + non-clickable, fades in
+   as the intro layer zooms away.
+   ============================================ */
+
+.viewer-layer {
+  position: relative;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  /* small delay so the viewer feels "revealed" rather than
+     appearing at the exact same moment the intro starts leaving */
+  transition: opacity 0.8s ease 0.25s;
+}
+
+.viewer-layer.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.viewmaster-body {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* ---------- The viewfinder frame ---------- */
+
+.viewfinder {
+  position: relative;
+  width: 340px;
+  height: 460px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  border: 10px solid var(--pink-primary, #ff5fa2);
+  box-shadow:
+    0 0 0 4px #000,
+    inset 0 0 40px rgba(0, 0, 0, 0.9),
+    0 8px 24px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  perspective: 900px; /* needed for the 3D flip trick */
+}
+
+.viewfinder-vignette {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(
+    circle at center,
+    transparent 55%,
+    rgba(0, 0, 0, 0.55) 85%,
+    rgba(0, 0, 0, 0.95) 100%
+  );
+}
+
+.media-stage {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease-in-out;
+}
+
+.media-stage.is-flipping {
+  transform: rotateY(180deg);
+}
+
+.media-stage img,
+.media-stage video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  backface-visibility: hidden;
+}
+
+/* ---------- The lever ---------- */
+
+.lever-btn {
+  position: absolute;
+  top: 50%;
+  left: 270px;
+  transform: translateY(-50%);
+  width: 150px;    /* NEW — stops the button from shrink-to-fit collapsing */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.1s ease-out;
+  z-index: 2;
+}
+
+.lever-btn:active {
+  transform: translateX(2px, -50px);
+}
+
+.lever-sprite {
+  width: 140px;   /* was 80px — scale it up to match the bigger viewfinder */
+  height: 175px;  /* keep the same width:height ratio you drew it at */
+  image-rendering: pixelated;
+  display: block;
+}
+
+/* ---------- Footer: counter + caption ---------- */
+
+.viewmaster-footer {
+  text-align: center;
+}
+
+.reel-counter {
+  display: block;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: var(--pink-primary, #ff5fa2);
+  margin-bottom: 4px;
+}
+
+.viewmaster-caption {
+  font-size: 13px;
+  color: #444;
+  min-height: 18px;
+}
+
+.back-btn {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 3;
+  background: var(--pink-primary, #ff5fa2);
+  color: #fff;
+  border: 2px solid #000;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 18px;
+  cursor: pointer;
+}

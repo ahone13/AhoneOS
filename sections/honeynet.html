@@ -1,0 +1,69 @@
+<div class="honey-window" id="honeyWindow">
+
+  <!-- LAYER 1: home screen -->
+  <div class="honey-home-layer" id="honeyHomeLayer">
+        <div class="honey-logo-wrap">
+            <span class="honey-logo-base">HoneyNet</span>
+            <span class="honey-logo-topping">HoneyNet</span>
+        </div>
+        <div class="honey-search-bar">
+            <input type="text" id="honeyInput" class="honey-input" placeholder="search the hive...">
+        </div>
+        <div class="honey-buttons">
+            <button class="honey-btn" id="honeySearchBtn">🔍 Search</button>
+            <button class="honey-btn honey-btn-secondary" id="honeyLuckyBtn">🐝 Surprise Me</button>
+        </div>
+        <div class="sticky-note-cluster">
+            <button class="sticky-note note-yellow" data-keyword="banana" style="--rotate: -6deg;">try "banana"</button>
+            <button class="sticky-note note-pink" data-keyword="deadline" style="--rotate: 4deg;">"deadline"</button>
+            <button class="sticky-note note-green" data-keyword="anime" style="--rotate: -3deg;">anime opinions inside</button>
+            <button class="sticky-note note-yellow" data-keyword="nothing" style="--rotate: 5deg;">search "nothing"</button>
+        </div>
+        <!--<div class="sticky-note sticky-note-static note-yellow" style="--rotate: -4deg;">
+            psst... try typing what's actually on your mind
+        </div>-->
+        <button class="honey-trending-link" id="honeyTrendingLink">🔥 Trending in my universe 🔥</button>
+  </div>
+
+    <audio id="rainAudio" src="assets/audio/rain.mp3" loop></audio>
+    <div class="rain-visual" id="rainVisual">
+        <img src="assets/images/honeynet/cloud-1.png" class="cloud cloud-1" alt="">
+        <img src="assets/images/honeynet/cloud-2.png" class="cloud cloud-2" alt="">
+        <img src="assets/images/honeynet/cloud-3.png" class="cloud cloud-3" alt="">
+    </div>
+    <button class="rain-mute-btn hidden" id="rainMuteBtn">🌧️</button>
+
+  <!-- LAYER 2: results screen -->
+  <div class="honey-results-layer hidden" id="honeyResultsLayer">
+    <button class="honey-back-btn" id="honeyBackBtn">← new search</button>
+    <div class="honey-results-header" id="honeyResultsHeader"></div>
+    <div class="honey-results-body" id="honeyResultsBody">
+      <!-- filled by JS based on keyword type -->
+    </div>
+  </div>
+
+</div>
+
+<div class="cookie-modal" id="cookieModal">
+  <div class="cookie-box">
+    <div class="cookie-header">🍪 We use cookies</div>
+    <div class="cookie-body">
+      <p>HoneyNet uses cookies to enhance your browsing experience, sell your data to evil corporate bees, and other totally normal things...</p>
+      <div class="cookie-buttons">
+        <button class="cookie-btn cookie-accept" id="cookieAccept">Accept All</button>
+        <button class="cookie-btn cookie-decline" id="cookieDecline">Decline</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="cookie-rain" id="cookieRain"></div>
+
+<div class="tier-detail-modal" id="tierDetailModal">
+  <div class="tier-detail-box">
+    <div class="tier-detail-header">
+      <span id="tierDetailTitle"></span>
+      <button class="tier-detail-close" id="tierDetailClose">✕</button>
+    </div>
+    <div class="tier-detail-body" id="tierDetailBody"></div>
+  </div>
+</div>

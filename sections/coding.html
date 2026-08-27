@@ -1,0 +1,58 @@
+<!-- =============================================
+   coding.html
+   Purpose: File explorer view of coding projects.
+   Loads into window-coding.
+============================================= -->
+
+<div class="explorer-container">
+
+  <div class="explorer-toolbar">
+    <span class="explorer-path">📁 AhoneOS / Coding_Projects</span>
+    <span class="explorer-count">1 object</span>
+  </div>
+
+  <div class="explorer-header">
+    <span class="col-name">Name</span>
+    <span class="col-stack">Stack</span>
+    <span class="col-status">Status</span>
+    <span class="col-vibe">Vibe</span>
+    <span class="col-year">Year</span>
+    <span class="col-link">Link</span>
+  </div>
+
+  <div class="explorer-files" id="codingFiles">
+
+    <div class="explorer-row" data-project="ahoneos">
+      <span class="col-name">
+        <img src="assets/images/icons/monitor.png" class="file-icon" alt="">
+        AhoneOS
+      </span>
+      <span class="col-stack">Vanilla JS</span>
+      <span class="col-status status-wip">🔄 in progress</span>
+      <span class="col-vibe">"the project that ate my life"</span>
+      <span class="col-year">2026</span>
+      <span class="col-link">↗</span>
+    </div>
+
+  </div>
+
+  <div class="context-menu" id="codingContextMenu">
+    <button class="context-item" id="coding-ctx-open">📂 Open</button>
+    <button class="context-item" id="coding-ctx-new-window">🗗 Open in New Window</button>
+    <div class="context-divider"></div>
+    <button class="context-item" id="coding-ctx-properties">🔍 Properties</button>
+  </div>
+
+</div>
+
+<div class="properties-modal" id="codingPropertiesModal">
+  <div class="properties-box">
+    <div class="properties-header">
+      <span>Properties</span>
+      <button class="properties-close" id="codingPropertiesClose">✕</button>
+    </div>
+    <div class="properties-body" id="codingPropertiesBody">
+      <!-- filled by JS -->
+    </div>
+  </div>
+</div>

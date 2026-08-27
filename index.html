@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AhoneOS</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets load in order — reset always goes first -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/desktop.css">
+  <link rel="stylesheet" href="css/bootscreen.css">
+  <link rel="stylesheet" href="css/windows.css">
+  <link rel="stylesheet" href="css/taskbar.css">
+  <link rel="stylesheet" href="css/icons.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/about.css">
+  <link rel="stylesheet" href="css/academic.css">
+  <link rel="stylesheet" href="css/contact.css">  
+  <link rel="stylesheet" href="css/downloads.css">  
+  <link rel="stylesheet" href="css/music.css">
+  <link rel="stylesheet" href="css/favorites.css">
+  <link rel="stylesheet" href="css/gallery.css">
+  <link rel="stylesheet" href="css/coding.css">
+  <link rel="stylesheet" href="css/writing.css">
+  <link rel="stylesheet" href="css/honeynet.css">
+</head>
+
+<body>
+
+  <!-- =============================================
+       BOOT SCREEN
+       Sits on top of everything via z-index.
+       JavaScript will hide this after a delay.
+  ============================================= -->
+  <div class="boot-screen" id="bootScreen">
+
+    <!-- Scanline overlay — pure CSS retro CRT effect -->
+    <div class="boot-scanlines"></div>
+
+    <div class="boot-content">
+
+      <!-- OS logo in boot screen -->
+      <div class="boot-logo">
+        <h1>AhoneOS</h1>
+        <p class="boot-tagline">Your World. Your Desktop.</p>
+      </div>
+
+      <!-- Loading bar -->
+      <div class="boot-loader">
+        <div class="boot-loader-bar"></div>
+      </div>
+
+      <!-- Status text — like a real OS boot -->
+      <p class="boot-status" id="bootStatus">Starting up...</p>
+
+    </div>
+
+  </div>
+
+
+  <!-- =============================================
+       DESKTOP
+       Hidden underneath the boot screen initially.
+  ============================================= -->
+  <div class="desktop" id="desktop">
+    <div class="desktop-scanlines"></div>
+    <!-- WINDOWS — hidden by default, opened by JS -->
+
+    <div class="window" id="window-about">
+    <div class="window-titlebar" data-window="window-about">
+        <span class="window-title">About Me</span>
+        <div class="window-controls">
+            <button class="window-btn minimize-btn" data-minimize="window-about">−</button>
+            <button class="window-btn maximize-btn" data-maximize="window-about">□</button>
+            <button class="window-btn close-btn" data-close="window-about">✕</button>
+        </div>
+    </div>
+    <div class="window-content">
+        <p>About Me content goes here...</p>
+    </div>
+    </div>
+
+    <div class="window" id="window-contact">
+        <div class="window-titlebar" data-window="window-contact">
+            <span class="window-title">Contact</span>
+            <div class="window-controls">
+            <button class="window-btn minimize-btn" data-minimize="window-contact">−</button>
+            <button class="window-btn maximize-btn" data-maximize="window-contact">□</button>
+            <button class="window-btn close-btn" data-close="window-contact">✕</button>
+            </div>
+        </div>
+        <div class="window-content">
+            <p>Contact content goes here...</p>
+        </div>
+    </div>
+
+    
+    <div class="window" id="window-academic">
+    <div class="window-titlebar" data-window="window-academic">
+        <span class="window-title">Academic Projects</span>
+        <div class="window-controls">
+        <button class="window-btn minimize-btn" data-minimize="window-academic">−</button>
+        <button class="window-btn maximize-btn" data-maximize="window-academic">□</button>
+        <button class="window-btn close-btn" data-close="window-academic">✕</button>
+        </div>
+    </div>
+    <div class="window-content">
+        <p>Academic projects go here...</p>
+    </div>
+    </div>
+
+    <div class="window" id="window-coding">
+        <div class="window-titlebar" data-window="window-coding">
+            <span class="window-title">Coding Projects</span>
+            <div class="window-controls">
+            <button class="window-btn minimize-btn" data-minimize="window-coding">−</button>
+            <button class="window-btn maximize-btn" data-maximize="window-coding">□</button>
+            <button class="window-btn close-btn" data-close="window-coding">✕</button>
+            </div>
+        </div>
+        <div class="window-content"></div>
+    </div>
+
+    <div class="window" id="window-writing">
+    <div class="window-titlebar" data-window="window-writing">
+        <span class="window-title">Writing</span>
+        <div class="window-controls">
+        <button class="window-btn minimize-btn" data-minimize="window-writing">−</button>
+        <button class="window-btn maximize-btn" data-maximize="window-writing">□</button>
+        <button class="window-btn close-btn" data-close="window-writing">✕</button>
+        </div>
+    </div>
+    <div class="window-content">
+        <p>Writing goes here...</p>
+    </div>
+    </div>
+
+    <div class="window" id="window-games">
+        <div class="window-titlebar" data-window="window-games">
+            <span class="window-title">Mini Games</span>
+            <div class="window-controls">
+            <button class="window-btn minimize-btn" data-minimize="window-games">−</button>
+            <button class="window-btn maximize-btn" data-maximize="window-games">□</button>
+            <button class="window-btn close-btn" data-close="window-games">✕</button>
+            </div>
+        </div>
+        <div class="window-content">
+            <p>Games go here...</p>
+        </div>
+    </div>
+
+    <div class="window" id="window-downloads">
+        <div class="window-titlebar" data-window="window-downloads">
+            <span class="window-title">Downloads</span>
+            <div class="window-controls">
+            <button class="window-btn minimize-btn" data-minimize="window-downloads">−</button>
+            <button class="window-btn maximize-btn" data-maximize="window-downloads">□</button>
+            <button class="window-btn close-btn" data-close="window-downloads">✕</button>
+            </div>
+        </div>
+        <div class="window-content"></div>
+    </div>
+
+    <div class="window" id="window-gallery">
+        <div class="window-titlebar" data-window="window-gallery">
+            <span class="window-title">Gallery</span>
+            <div class="window-controls">
+            <button class="window-btn minimize-btn" data-minimize="window-gallery">−</button>
+            <button class="window-btn maximize-btn" data-maximize="window-gallery">□</button>
+            <button class="window-btn close-btn" data-close="window-gallery">✕</button>
+            </div>
+        </div>
+        <div class="window-content">
+            <p>Gallery goes here...</p>
+        </div>
+    </div>
+
+    <div class="window" id="window-favorites">
+        <div class="window-titlebar" data-window="window-favorites">
+            <span class="window-title">Favorites</span>
+            <div class="window-controls">
+            <button class="window-btn minimize-btn" data-minimize="window-favorites">−</button>
+            <button class="window-btn maximize-btn" data-maximize="window-favorites">□</button>
+            <button class="window-btn close-btn" data-close="window-favorites">✕</button>
+            </div>
+        </div>
+        <div class="window-content"></div>
+    </div>
+
+    <div class="window" id="window-music">
+        <div class="window-titlebar" data-window="window-music">
+            <span class="window-title">Music</span>
+            <div class="window-controls">
+            <button class="window-btn minimize-btn" data-minimize="window-music">−</button>
+            <button class="window-btn maximize-btn" data-maximize="window-music">□</button>
+            <button class="window-btn close-btn" data-close="window-music">✕</button>
+            </div>
+        </div>
+        <div class="window-content"></div>
+    </div>
+
+    <div class="window" id="window-honeynet">
+        <div class="window-titlebar" data-window="window-honeynet">
+            <span class="window-title">HoneyNet</span>
+            <div class="window-controls">
+            <button class="window-btn minimize-btn" data-minimize="window-honeynet">−</button>
+            <button class="window-btn maximize-btn" data-maximize="window-honeynet">□</button>
+            <button class="window-btn close-btn" data-close="window-honeynet">✕</button>
+            </div>
+        </div>
+        <div class="window-content"></div>
+    </div>
+
+    <div class="sky"></div>
+    <div class="ground">
+    <!-- Environment layers — populated by animations.js -->
+        <div class="grass-container" id="grassContainer"></div>
+        <div class="flowers-container" id="flowersContainer"></div>
+        <div class="wind-particles" id="windParticles"></div>
+    </div>
+
+        <!-- =============================================
+         AHONE OS LOGO
+         The permanent logo displayed on the desktop.
+         The wrapper contains BOTH the halo and the title
+         so they scale together.
+    ============================================= -->
+    <div class="os-logo">
+        <img src="assets/images/ahoneOS-logo.png" alt="AhoneOS" class="logo-img">
+        <!-- Subtitle -->
+        <br>
+        <p class="logo-subtitle">Version 1.0 &nbsp;✦&nbsp; Est. 2026</p>
+        </br>
+    </div>
+
+
+<!-- TASKBAR — sits at the bottom of the desktop -->
+    <div class="taskbar" id="taskbar">
+    <div class="taskbar-left">
+        <span class="taskbar-brand">AhoneOS</span>
+    </div>
+    <div class="taskbar-items" id="taskbarItems">
+        <!-- Minimized window buttons appear here dynamically -->
+    </div>
+    <div class="taskbar-right">
+        <span class="taskbar-clock" id="taskbarClock">00:00</span>
+    </div>
+    </div>
+
+    <!-- =============================================
+     DESKTOP ICONS
+     Each icon opens a window when clicked.
+     data-window matches the window's id.
+============================================= -->
+<div class="desktop-icons">
+
+    <div class="desktop-icon" data-window="window-about">
+        <img src="assets/images/icons/polaroid.png" alt="About Me">
+        <span>About Me</span>
+    </div>
+
+    <div class="desktop-icon" data-window="window-academic">
+        <img src="assets/images/icons/books.png" alt="Academic Projects">
+        <span>Academic Projects</span>
+    </div>
+
+    <div class="desktop-icon" data-window="window-coding">
+        <img src="assets/images/icons/monitor.png" alt="Coding Projects">
+        <span>Coding Projects</span>
+    </div>
+
+    <div class="desktop-icon" data-window="window-writing">
+        <img src="assets/images/icons/notebook.png" alt="Writing">
+        <span>Writing</span>
+    </div>
+
+    <div class="desktop-icon" data-window="window-games">
+        <img src="assets/images/icons/gameboy.png" alt="Mini Games">
+        <span>Mini Games</span>
+    </div>
+
+    <div class="desktop-icon" data-window="window-contact">
+        <img src="assets/images/icons/envelope.png" alt="Contact">
+        <span>Contact</span>
+    </div>
+
+    <div class="desktop-icon" data-window="window-favorites">
+        <img src="assets/images/icons/folder.png" alt="Favorites">
+        <span>Favorites</span>
+    </div>
+
+    <div class="desktop-icon" data-window="window-music">
+        <img src="assets/images/icons/cassette.png" alt="Music">
+        <span>Music</span>
+    </div>
+
+    <div class="desktop-icon" data-window="window-downloads">
+        <img src="assets/images/icons/disk.png" alt="Downloads">
+        <span>Downloads</span>
+    </div>
+
+    <div class="desktop-icon" data-window="window-gallery">
+        <img src="assets/images/icons/camera.png" alt="Gallery">
+        <span>Gallery</span>
+    </div>
+
+    <div class="desktop-icon" data-window="window-honeynet">
+        <img src="assets/images/icons/earth.png" alt="HoneyNet">
+        <span>HoneyNet</span>
+    </div>
+
+</div>
+
+  </div>
+
+
+  <!-- Scripts go at the BOTTOM of body, always.
+       Reason: HTML loads top to bottom. If JS runs before
+       the HTML elements exist, it can't find them.
+       Bottom placement guarantees everything is loaded first. -->
+  <script src="js/boot.js"></script>
+  <script src="js/windows.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/academic.js"></script>
+  <script src="js/downloads.js"></script>
+  <script src="js/music.js"></script>
+  <script src="js/favorites.js"></script>
+  <script src="js/gallery.js"></script>
+  <script src="js/coding.js"></script>
+  <script src="js/writing.js"></script>
+  <script src="js/honeynet.js"></script>
+
+</body>
+</html>

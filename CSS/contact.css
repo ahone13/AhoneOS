@@ -1,0 +1,310 @@
+/* =============================================
+   contact.css
+   Purpose: The AhoneOS Post Office.
+   Warm, whimsical, Y2K pixel aesthetic.
+============================================= */
+
+
+/* ----------------------------
+   CONTAINER
+   ---------------------------- */
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 0 20px 0;
+}
+
+
+/* ----------------------------
+   BANNER
+   ---------------------------- */
+.contact-banner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-bottom: 2px solid var(--pixel-dark);
+}
+
+.banner-illustration {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 160px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.banner-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 6px 12px;
+  background: linear-gradient(
+    to top,
+    rgba(255, 110, 180, 0.7),
+    transparent
+  );
+}
+
+.post-office-label {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: white;
+  letter-spacing: 3px;
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.4);
+}
+
+
+/* ----------------------------
+   WELCOME TEXT
+   ---------------------------- */
+.contact-welcome {
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.welcome-main {
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  color: var(--pink-primary);
+  letter-spacing: 1px;
+}
+
+.welcome-sub {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: #444;
+  line-height: 1.9;
+  letter-spacing: 0.3px;
+}
+
+
+/* ----------------------------
+   STATUS SECTION
+   ---------------------------- */
+.contact-status {
+  padding: 12px 16px;
+  background: rgba(255, 182, 193, 0.08);
+  border-top: 1px dashed var(--pink-light);
+  border-bottom: 1px dashed var(--pink-light);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.status-title {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  color: #888;
+  letter-spacing: 2px;
+}
+
+.status-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: #333;
+  letter-spacing: 0.5px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  /*
+    Each dot gets a different color
+    to mimic a real status indicator.
+  */
+}
+
+.status-dot.green  { background: #4CAF50; box-shadow: 0 0 4px #4CAF50; }
+.status-dot.yellow { background: #FFD700; box-shadow: 0 0 4px #FFD700; }
+.status-dot.pink   { background: #FF6EB4; box-shadow: 0 0 4px #FF6EB4; }
+.status-dot.blue   { background: #87CEEB; box-shadow: 0 0 4px #87CEEB; }
+
+.response-time {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  color: #888;
+  font-style: italic;
+  letter-spacing: 0.5px;
+  line-height: 1.8;
+}
+
+
+/* ----------------------------
+   CONTACT CARDS
+   Each one looks like an envelope.
+   ---------------------------- */
+.contact-cards {
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border: 2px solid #e0d0d0;
+  background: #fffdf7;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-card:hover {
+  border-color: var(--pink-primary);
+  background: rgba(255, 110, 180, 0.04);
+  transform: translateX(4px);
+  /*
+    Slight rightward nudge on hover —
+    like the envelope is sliding out.
+  */
+}
+
+
+/* ----------------------------
+   ENVELOPE
+   The little envelope icon on each card.
+   Flap opens on hover.
+   ---------------------------- */
+.envelope {
+  width: 48px;
+  height: 40px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.envelope img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  transition: opacity 0.2s;
+}
+
+.envelope .env-closed { opacity: 1; position: absolute; top: 0; left: 0; }
+.envelope .env-open   { opacity: 0; position: absolute; top: 0; left: 0; }
+
+.contact-card:hover .env-closed { opacity: 0; }
+.contact-card:hover .env-open   { opacity: 1; }
+/*
+  On hover: closed fades out, open fades in.
+  Simple image swap — much cleaner than CSS triangles.
+*/
+
+.contact-card:hover .envelope-flap {
+  transform: rotateX(-140deg);
+  /*
+    rotateX flips it backward — the flap "opens"
+    revealing the envelope body underneath.
+    -140deg goes slightly past flat for a natural feel.
+  */
+}
+
+.envelope-icon {
+  font-size: 0.8rem;
+}
+
+
+/* ----------------------------
+   CARD INFO
+   Label and value text.
+   ---------------------------- */
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+}
+
+.card-label {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  color: #888;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.card-value {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: var(--pixel-dark);
+  letter-spacing: 0.5px;
+}
+
+
+/* ----------------------------
+   PAPER PLANE ANIMATION
+   Flies across on email click.
+   ---------------------------- */
+.paper-plane {
+  position: absolute;
+  right: -60px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.paper-plane.flying {
+  animation: plane-fly 0.9s ease-in forwards;
+}
+
+@keyframes plane-fly {
+  0%   { right: 80%; opacity: 1; transform: translateY(-50%) rotate(0deg); }
+  100% { right: -10%; opacity: 0; transform: translateY(-80%) rotate(-10deg); }
+}
+
+
+/* ----------------------------
+   CLOSING MESSAGE
+   ---------------------------- */
+.contact-closing {
+  padding: 16px;
+  text-align: center;
+  border-top: 2px dashed var(--pink-light);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.contact-closing p {
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: #555;
+  letter-spacing: 1px;
+  line-height: 1.8;
+}
+
+.closing-stamp {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  color: var(--pink-primary);
+  letter-spacing: 3px;
+  margin-top: 6px;
+  opacity: 0.7;
+}

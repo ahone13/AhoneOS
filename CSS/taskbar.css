@@ -1,0 +1,93 @@
+/* =============================================
+   taskbar.css
+   Purpose: The bottom taskbar — shows minimized
+   windows and a clock. Very Windows XP.
+   ============================================= */
+
+.taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 36px;
+  background: linear-gradient(
+    to bottom,
+    #FF85C2 0%,
+    #FF4DAE 40%,
+    #CC0077 100%
+  );
+  border-top: 2px solid var(--pixel-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  z-index: 8000;
+  /*
+    z-index: 5000 puts taskbar above windows (100-200)
+    but below the boot screen (9999).
+  */
+  gap: 8px;
+  box-shadow: 0 -2px 0 rgba(255,255,255,0.2) inset;
+}
+
+/* AhoneOS brand on the left */
+.taskbar-brand {
+  font-family: 'Bratz', var(--font-ui);
+  font-size: 0.85rem;
+  color: white;
+  text-shadow:
+    1px 1px 0px #880E4F,
+    0px 0px 8px rgba(255,255,255,0.5);
+  white-space: nowrap;
+  padding-right: 8px;
+  border-right: 1px solid rgba(255,255,255,0.3);
+}
+
+/* Middle area — minimized window buttons live here */
+.taskbar-items {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  /*
+    flex: 1 makes this section fill all available
+    space between the brand and the clock.
+  */
+  padding: 0 8px;
+  overflow: hidden;
+}
+
+/* Each minimized window becomes one of these */
+.taskbar-item {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: white;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.4);
+  padding: 3px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  letter-spacing: 1px;
+  transition: background 0.1s;
+  user-select: none;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+}
+
+.taskbar-item:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* Clock on the right */
+.taskbar-right {
+  padding-left: 8px;
+  border-left: 1px solid rgba(255,255,255,0.3);
+}
+
+.taskbar-clock {
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: white;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+  letter-spacing: 1px;
+  white-space: nowrap;
+}

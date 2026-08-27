@@ -1,0 +1,63 @@
+<div class="writer-window" id="writerWindow">
+
+  <!-- Sidebar, Word-inspired but reimagined -->
+    <div class="writer-sidebar">
+        <div class="sidebar-item" id="navHome">
+            <img src="assets/images/writing/writer-home.png" class="sidebar-icon" alt="">
+            Home
+        </div>
+        <div class="sidebar-item" id="navNew">
+            <img src="assets/images/writing/writer-new.png" class="sidebar-icon" alt="">
+            New
+        </div>
+        <div class="sidebar-item" id="navSubstack">
+            <img src="assets/images/writing/writer-substack.png" class="sidebar-icon" alt="">
+            Substack
+        </div>
+        <div class="sidebar-item" id="navDrafts">
+            <img src="assets/images/writing/writer-drafts.png" class="sidebar-icon" alt="">
+            Drafts
+        </div>
+    </div>
+
+  <div class="writer-main">
+
+    <!-- LAYER 1: greeting + piece list -->
+    <div class="writer-list-layer" id="writerListLayer">
+      <h2 class="writer-greeting" id="writerGreeting"></h2>
+      <div class="writer-section-label">Recent</div>
+      <div class="writer-files" id="writerFiles">
+        <!-- filled by JS from writingData -->
+      </div>
+    </div>
+
+    <!-- LAYER 2: open document, same window -->
+    <div class="writer-page-layer hidden" id="writerPageLayer">
+      <button class="writer-back-btn" id="writerBackBtn">← Back</button>
+      <div class="page-wrapper" id="pageWrapper">
+        <!-- filled by JS when a piece is opened -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Little popup for dead-end nav clicks -->
+  <div class="writer-toast" id="writerToast"></div>
+
+</div>
+
+<!-- Fake password modal for the locked Drafts folder -->
+<div class="password-modal" id="passwordModal">
+  <div class="password-box">
+    <div class="password-header">
+      <span>Enter Password</span>
+      <button class="password-close" id="passwordClose">✕</button>
+    </div>
+    <div class="password-body">
+      <p class="password-hint">hint: the sun is a...</p>
+      <input type="password" class="password-input" id="passwordInput" placeholder="••••••••">
+      <button class="password-submit" id="passwordSubmit">Unlock</button>
+      <p class="password-result" id="passwordResult"></p>
+    </div>
+  </div>
+</div>

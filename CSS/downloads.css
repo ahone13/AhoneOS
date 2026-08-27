@@ -1,0 +1,387 @@
+/* =============================================
+   downloads.css
+   Purpose: Filing cabinet Downloads window.
+============================================= */
+
+.downloads-container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  gap: 0;
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+  min-height: 400px;
+}
+
+/* ----------------------------
+   CABINET
+   ---------------------------- */
+.cabinet-wrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.cabinet-img {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  display: block;
+  image-rendering: auto;
+  /*
+    auto = smooth rendering for hand-drawn art.
+    We use pixelated only for pixel art —
+    your Sketchbook drawings look better smooth.
+  */
+}
+
+/* ----------------------------
+   DRAWER ZONES
+   Invisible clickable areas overlaid
+   on top of the cabinet illustration.
+   Positioned to match each drawer.
+   ---------------------------- */
+.drawer-zone {
+  position: absolute;
+  left: 10%;
+  width: 80%;
+  height: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s;
+  border-radius: 2px;
+}
+
+.drawer-zone:hover {
+  background: rgba(255, 110, 180, 0.1);
+}
+
+/* Position each drawer zone to match illustration */
+#drawer1 { top: 5%; }
+#drawer2 { top: 35%; }
+#drawer3 { top: 65%; }
+
+.drawer-label {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  color: var(--pixel-dark);
+  letter-spacing: 2px;
+  opacity: 0;
+  /*
+    Hidden by default — appears on hover
+    so visitor knows drawer is clickable.
+  */
+  transition: opacity 0.2s;
+  background: rgba(255,255,255,0.8);
+  padding: 3px 8px;
+  border: 1px solid var(--pixel-dark);
+}
+
+.drawer-zone:hover .drawer-label {
+  opacity: 1;
+}
+
+
+/* ----------------------------
+   OPEN DRAWER VIEW
+   Shown when a drawer is clicked.
+   Hidden by default.
+   ---------------------------- */
+.drawer-open-view {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  animation: drawer-slide-in 0.3s ease-out forwards;
+}
+
+.drawer-open-view.visible {
+  display: flex;
+}
+
+@keyframes drawer-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 2px dashed var(--pink-light);
+}
+
+.drawer-open-label {
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: var(--pink-primary);
+  letter-spacing: 2px;
+}
+
+.drawer-close-btn {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  color: #888;
+  cursor: pointer;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border: 1px solid #ddd;
+  background: transparent;
+  transition: all 0.1s;
+}
+
+.drawer-close-btn:hover {
+  border-color: var(--pink-primary);
+  color: var(--pink-primary);
+}
+
+.drawer-img {
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+
+/* ----------------------------
+   FILES INSIDE DRAWER
+   ---------------------------- */
+.drawer-files {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.file-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 2px solid #e0d0d0;
+  background: #fffdf7;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.15s;
+  position: relative;
+}
+
+.file-card.available:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 0px #e0b0c8;
+  border-color: var(--pink-primary);
+}
+
+.file-card.coming-soon {
+  opacity: 0.55;
+  filter: grayscale(20%);
+}
+
+.file-icon-large {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.file-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+}
+
+.file-card-name {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: var(--pixel-dark);
+  letter-spacing: 0.5px;
+}
+
+.file-card-meta {
+  font-family: var(--font-pixel);
+  font-size: 0.48rem;
+  color: #aaa;
+  letter-spacing: 1px;
+}
+
+.file-card-status {
+  font-family: var(--font-pixel);
+  font-size: 0.48rem;
+  letter-spacing: 1px;
+}
+
+.file-card-status.ok   { color: #4CAF50; }
+.file-card-status.soon { color: #aaa; }
+
+.file-action-btn {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  padding: 6px 12px;
+  border: 2px solid var(--pixel-dark);
+  cursor: pointer;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.file-action-btn.download {
+  background: var(--pink-primary);
+  color: white;
+}
+
+.file-action-btn.download:hover {
+  background: var(--pink-glow);
+  transform: scale(1.05);
+}
+
+.file-action-btn.locked {
+  background: #ddd;
+  color: #999;
+  border-color: #ccc;
+}
+
+
+/* ----------------------------
+   CONFETTI
+   ---------------------------- */
+.confetti-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  opacity: 0;
+  animation: confetti-fall var(--fall-duration, 1s) ease-out forwards;
+  animation-delay: var(--fall-delay, 0s);
+}
+
+@keyframes confetti-fall {
+  0%   { transform: translateY(100%) rotate(0deg); opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateY(-400%) rotate(720deg); opacity: 0; }
+}
+
+
+/* ----------------------------
+   COMING SOON DIALOG
+   ---------------------------- */
+.soon-dialog {
+  position: absolute;
+  bottom: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 280px;
+  background: #fffdf7;
+  border: 3px solid var(--pixel-dark);
+  box-shadow: 4px 4px 0px var(--pixel-dark);
+  z-index: 100;
+  transition: bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.soon-dialog.visible { bottom: 20px; }
+
+.soon-dialog-inner {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.soon-icon { font-size: 2rem; }
+
+.soon-message {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: var(--pixel-dark);
+  line-height: 1.8;
+  letter-spacing: 0.3px;
+}
+
+.soon-sub {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  color: var(--pink-primary);
+  letter-spacing: 1px;
+}
+
+.soon-close {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  padding: 6px 16px;
+  border: 2px solid var(--pixel-dark);
+  background: var(--cream);
+  cursor: pointer;
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+
+.soon-close:hover {
+  background: rgba(255, 110, 180, 0.15);
+}
+
+/* ----------------------------
+   VINE DECORATIONS
+   Four corners of the window content.
+   ---------------------------- */
+.window-content {
+  position: relative;
+}
+
+.vine-top, .vine-bottom, .vine-left, .vine-right {
+  position: absolute;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.vine-top {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: 0;
+}
+
+.vine-bottom {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  transform: scaleY(-1);
+  z-index: 0;
+}
+.vine-left {
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: auto;
+  transform: rotate(90deg) translateY(-100%);
+  transform-origin: top left;
+}
+
+.vine-right {
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: auto;
+  transform: rotate(-90deg) translateY(0%);
+  transform-origin: top right;
+}

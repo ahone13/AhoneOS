@@ -1,0 +1,215 @@
+/* =============================================
+   bootscreen.css
+   Purpose: The startup screen shown before
+   the desktop loads. Pure CSS visuals —
+   JavaScript only controls WHEN it disappears.
+   ============================================= */
+
+
+/* ----------------------------
+   BOOT SCREEN CONTAINER
+   Covers the entire viewport.
+   Sits above everything using z-index.
+   ---------------------------- */
+.boot-screen {
+  position: fixed;
+  /*
+    position: fixed means "stay in place relative to the
+    browser window, even if the page scrolls."
+    Perfect for overlays.
+  */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0a0a0a;
+  /*
+    Near-black background — classic OS boot screen.
+    Pure black (#000) can look harsh; #0a0a0a is softer.
+  */
+  z-index: 9999;
+  /*
+    z-index controls stacking order.
+    9999 means "on top of basically everything."
+    The desktop behind it has no z-index (defaults to 0).
+  */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*
+    These three flex properties together = perfect centering.
+    align-items: center → vertical center
+    justify-content: center → horizontal center
+  */
+
+  /* The fade-out transition — CSS handles the animation */
+  transition: opacity 1s ease, visibility 1s ease;
+  /*
+    When JavaScript adds the "hidden" class,
+    opacity will smoothly animate from 1 to 0 over 1 second.
+    visibility: hidden makes it unclickable after fading.
+  */
+}
+
+/*
+  The "hidden" class is added by JavaScript.
+  This is the switch JS flips — CSS does the rest.
+*/
+.boot-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+
+/* ----------------------------
+   CRT SCANLINE EFFECT
+   A pseudo retro monitor look.
+   Pure CSS — no image needed.
+   ---------------------------- */
+.boot-scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  /*
+    repeating-linear-gradient creates evenly spaced stripes.
+    Alternating transparent and very slightly white lines
+    simulate the horizontal scanlines of a CRT monitor.
+  */
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.015) 2px,
+    rgba(255, 255, 255, 0.015) 4px
+  );
+  z-index: 1;
+}
+
+
+/* ----------------------------
+   BOOT CONTENT
+   Centers everything inside the boot screen.
+   ---------------------------- */
+.boot-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  /*
+    gap adds space between flex children.
+    Much cleaner than adding margin to each child individually.
+  */
+}
+
+
+/* ----------------------------
+   BOOT LOGO
+   AhoneOS title on the boot screen.
+   More dramatic version of the desktop logo.
+   ---------------------------- */
+.boot-logo h1 {
+  font-family: var(--font-ui);
+  font-size: clamp(4rem, 12vw, 9rem);
+  font-weight: 900;
+  font-style: italic;
+  color: #FF6EB4;
+  text-align: center;
+  letter-spacing: -3px;
+
+  /* Deeper, more dramatic glow for the dark boot screen */
+  text-shadow:
+    4px  4px  0px #880E4F,
+    8px  8px  0px #4a0028,
+   -1px -1px  0px #FF80AB,
+    0px  0px 30px #FF6EB4,
+    0px  0px 60px #FF1493,
+    0px  0px 90px rgba(255, 20, 147, 0.3);
+}
+
+.boot-tagline {
+  font-family: var(--font-ui);
+  font-size: clamp(0.7rem, 2vw, 1rem);
+  color: #FF80AB;
+  text-align: center;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-top: 8px;
+  opacity: 0.7;
+}
+
+
+/* ----------------------------
+   LOADING BAR
+   The classic OS progress bar.
+   Inner bar is animated with CSS keyframes.
+   ---------------------------- */
+.boot-loader {
+  width: clamp(200px, 40vw, 400px);
+  height: 8px;
+  background: #1a1a1a;
+  border: 1px solid #FF6EB4;
+  border-radius: 0;
+  /*
+    No border-radius = sharp pixel corners.
+    Very intentional for the retro OS feel.
+  */
+  overflow: hidden;
+}
+
+.boot-loader-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(
+    to right,
+    #FF6EB4,
+    #FF1493,
+    #FFB6C1
+  );
+  /*
+    @keyframes animation defined below.
+    "loading" = animation name
+    2.5s = duration
+    ease-in-out = starts slow, speeds up, slows down
+    forwards = stays at the end state when done
+  */
+  animation: loading 2.5s ease-in-out forwards;
+}
+
+@keyframes loading {
+  /*
+    Keyframes define what a property looks like
+    at specific points in time (0% = start, 100% = end).
+    Everything between is interpolated automatically.
+  */
+  0%   { width: 0%; }
+  30%  { width: 35%; }
+  60%  { width: 65%; }
+  85%  { width: 88%; }
+  100% { width: 100%; }
+  /*
+    Notice it doesn't go linearly — it hesitates and speeds up.
+    This mimics real OS loaders and feels more authentic.
+  */
+}
+
+
+/* ----------------------------
+   BOOT STATUS TEXT
+   Updated by JavaScript to cycle through messages.
+   ---------------------------- */
+.boot-status {
+  font-family: 'Courier New', monospace;
+  /*
+    Courier New is a monospace font — every character
+    is the same width. Classic terminal / OS aesthetic.
+  */
+  font-size: clamp(0.65rem, 1.5vw, 0.8rem);
+  color: #FF80AB;
+  letter-spacing: 2px;
+  opacity: 0.6;
+}

@@ -1,0 +1,358 @@
+/* =============================================
+   about.css
+   Purpose: Styles for the About Me window —
+   ID card, bio, fun facts.
+============================================= */
+
+
+/* ----------------------------
+   OVERALL CONTAINER
+   ---------------------------- */
+.about-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 8px;
+}
+
+
+/* ----------------------------
+   ID CARD WRAPPER
+   Holds the card + tape pieces.
+   Gives us the rotated, taped look.
+   ---------------------------- */
+.id-card-wrapper {
+  position: relative;
+  width: fit-content;
+  margin: 20px auto 8px auto;
+  /*
+    auto left/right margin = horizontally centered.
+    Top margin gives tape room to breathe above the card.
+  */
+  transform: rotate(-2deg);
+  /*
+    Slight tilt — like someone stuck it on crooked.
+    Negative = tilts left.
+  */
+}
+
+
+/* ----------------------------
+   TAPE PIECES
+   Semi-transparent strips placed
+   over the card edges.
+   ---------------------------- */
+.tape {
+  position: absolute;
+  border: 1px solid rgba(200, 180, 120, 0.3);
+  z-index: 10;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 4px,
+    rgba(255, 255, 255, 0.15) 4px,
+    rgba(255, 255, 255, 0.15) 5px
+  );
+  background-color: rgba(255, 235, 180, 0.55);
+}
+
+.tape-left {
+  width: 16px;
+  height: 48px;
+  left: -9px;
+  top: 25%;
+  transform: rotate(-8deg);
+  /* more dramatic rotation = clearly hand-applied */
+  background-color: rgba(255, 235, 180, 0.6);
+}
+
+.tape-right {
+  width: 20px;
+  height: 40px;
+  right: -10px;
+  top: 15%;
+  transform: rotate(12deg);
+  /* different angle entirely from left side */
+  background-color: rgba(255, 235, 180, 0.45);
+}
+
+.tape-top {
+  width: 55px;
+  height: 13px;
+  top: -7px;
+  left: 30%;
+  transform: rotate(-3deg);
+  /* slightly lifting = one end higher than other */
+  background-color: rgba(255, 235, 180, 0.35);
+}
+
+/* NEW — bottom tape, most crooked of all */
+.tape-bottom {
+  width: 45px;
+  height: 14px;
+  bottom: -7px;
+  right: 20%;
+  transform: rotate(6deg);
+  background-color: rgba(255, 235, 180, 0.5);
+}
+
+
+/* ----------------------------
+   THE ID CARD ITSELF
+   ---------------------------- */
+.id-card {
+  width: 380px;
+  border: 3px solid #1a1a2e;
+  /* 
+    Instead of uniform border-radius: 8px,
+    each corner gets a different value.
+    The / separates horizontal from vertical radius
+    per corner — creating organic, uneven curves.
+  */
+  border-radius: 6px 10px 7px 9px / 9px 7px 10px 6px;
+  overflow: hidden;
+  box-shadow:
+    3px 3px 0px #1a1a2e,
+    6px 6px 0px rgba(26,26,46,0.3);
+  background: #fffdf7;
+}
+
+
+/* ----------------------------
+   CARD HEADER — "CLOWN LICENSE"
+   ---------------------------- */
+.id-card-header {
+  background: linear-gradient(
+    135deg,
+    #FF1493 0%,
+    #FF6EB4 50%,
+    #FF1493 100%
+  );
+  padding: 8px 12px;
+  text-align: center;
+  border-bottom: 3px solid #1a1a2e;
+  border-radius: 0; /* header stays flat inside */
+}
+
+.id-card-header span {
+  font-family: var(--font-pixel);
+  font-size: 0.85rem;
+  color: white;
+  letter-spacing: 3px;
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.4);
+}
+
+
+/* ----------------------------
+   CARD BODY — photo + fields
+   ---------------------------- */
+.id-card-body {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+}
+
+
+/* ----------------------------
+   PHOTO BOX
+   ---------------------------- */
+.id-card-photo {
+  flex-shrink: 0;
+  /*
+    flex-shrink: 0 prevents the photo box from
+    getting squished when the fields take up space.
+  */
+}
+
+.id-card-photo-placeholder {
+  width: 80px;
+  height: 95px;
+  border: 2px solid #1a1a2e;
+  background: linear-gradient(
+    135deg,
+    #FFB6C1,
+    #FF6EB4
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.id-card-photo-placeholder span {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  color: white;
+  letter-spacing: 2px;
+  opacity: 0.8;
+}
+
+
+/* ----------------------------
+   ID FIELDS
+   Each field: label on top, value below.
+   ---------------------------- */
+.id-card-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+.id-field {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.id-label {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  color: #888;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.id-value {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  color: #1a1a2e;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 2px;
+}
+
+
+/* ----------------------------
+   CARD FOOTER — certified stamp
+   ---------------------------- */
+.id-card-footer {
+  background: #FFD700;
+  border-top: 2px solid #1a1a2e;
+  padding: 5px;
+  text-align: center;
+}
+
+.id-certified {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: #1a1a2e;
+  letter-spacing: 2px;
+}
+
+
+/* ----------------------------
+   BIO SECTION
+   ---------------------------- */
+.about-bio {
+  padding: 0 8px;
+}
+
+.about-bio p {
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: #2a2a3e;
+  line-height: 1.9;
+  letter-spacing: 0.3px;
+}
+
+
+/* ----------------------------
+   FUN FACTS
+   ---------------------------- */
+.about-facts {
+  padding: 0 8px 16px 8px;
+}
+
+.facts-title {
+  font-family: var(--font-pixel);
+  font-size: 0.7rem;
+  color: var(--pink-primary);
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.facts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.facts-list li {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: #2a2a3e;
+  line-height: 1.6;
+  padding-left: 12px;
+  position: relative;
+}
+
+.facts-list li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  color: var(--pink-primary);
+  font-size: 0.5rem;
+  top: 2px;
+}
+
+/* ----------------------------
+   TABBED FACTS
+   ---------------------------- */
+.facts-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  /*
+    flex-wrap: wrap lets tabs go to a second line
+    if the window is too narrow — no overflow.
+  */
+}
+
+.facts-tab {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  color: var(--pink-primary);
+  background: transparent;
+  border: 1px solid var(--pink-primary);
+  padding: 4px 10px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.15s;
+  border-radius: 2px;
+}
+
+.facts-tab:hover {
+  background: rgba(255, 110, 180, 0.1);
+}
+
+.facts-tab.active {
+  background: var(--pink-primary);
+  color: white;
+  /*
+    Active tab = filled pink.
+    Inactive = just a pink outline.
+    Classic tab pattern.
+  */
+}
+
+/* Panels — hidden by default, shown when active */
+.facts-panel {
+  display: none;
+}
+
+.facts-panel.active {
+  display: block;
+  animation: tab-fade 0.2s ease;
+}
+
+@keyframes tab-fade {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+  /*
+    Tiny fade-in when switching tabs.
+    Feels polished without being flashy.
+  */
+}
+
