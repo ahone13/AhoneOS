@@ -1,0 +1,101 @@
+<div id="games-window-content">
+
+  <!-- SCREEN 1: Entry Gate -->
+  <div id="gate-screen" class="game-screen">
+    <span class="gate-sparkle sparkle-1">✦</span>
+    <span class="gate-sparkle sparkle-2">✧</span>
+    <span class="gate-sparkle sparkle-3">✦</span>
+
+    <p id="gate-question" class="gate-text">
+      this is serious business. why are you looking for games?
+    </p>
+
+    <div id="gate-buttons">
+      <button class="gate-btn" data-choice="tired">
+        i'm tired of life...please lemme play
+      </button>
+      <button class="gate-btn" data-choice="mistake">
+        i'm a serious person. clicked this icon by mistake
+      </button>
+    </div>
+
+    <p id="gate-response" class="gate-text hidden"></p>
+  </div>
+
+  <!-- SCREEN 2: Game Select Menu (built next step) -->
+  <div id="menu-screen" class="game-screen hidden">
+    <h2 class="menu-title">pick your poison</h2>
+
+    <div id="menu-cards">
+      <button class="menu-card" data-game="tictactoe">
+        <span class="menu-card-icon">✖️⭕</span>
+        <span class="menu-card-label">tic-tac-toe</span>
+      </button>
+
+      <button class="menu-card" data-game="whackashroom">
+        <span class="menu-card-icon">🍄</span>
+        <span class="menu-card-label">whack-a-shroom</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="tictactoe-screen" class="game-screen hidden">
+    <div class="confetti-container" id="ttt-confetti"></div>
+    <div id="ttt-board">
+      <button class="ttt-cell" data-index="0"></button>
+      <button class="ttt-cell" data-index="1"></button>
+      <button class="ttt-cell" data-index="2"></button>
+      <button class="ttt-cell" data-index="3"></button>
+      <button class="ttt-cell" data-index="4"></button>
+      <button class="ttt-cell" data-index="5"></button>
+      <button class="ttt-cell" data-index="6"></button>
+      <button class="ttt-cell" data-index="7"></button>
+      <button class="ttt-cell" data-index="8"></button>
+      <div id="ttt-line" class="hidden"></div>
+    </div>
+
+    <div id="ttt-result" class="hidden">
+      <p id="ttt-result-text" class="gate-text"></p>
+      <div id="ttt-result-buttons">
+        <button id="ttt-play-again" class="menu-btn">play again</button>
+        <button id="ttt-back-to-menu" class="menu-btn">back to menu</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="whackashroom-screen" class="game-screen hidden">
+    <div id="was-stats">
+      <span id="was-score">score: 0</span>
+      <span id="was-timer">time: 30</span>
+    </div>
+
+    <div id="was-grid">
+      <div class="was-hole" data-index="0"></div>
+      <div class="was-hole" data-index="1"></div>
+      <div class="was-hole" data-index="2"></div>
+      <div class="was-hole" data-index="3"></div>
+      <div class="was-hole" data-index="4"></div>
+      <div class="was-hole" data-index="5"></div>
+      <div class="was-hole" data-index="6"></div>
+      <div class="was-hole" data-index="7"></div>
+      <div class="was-hole" data-index="8"></div>
+      <div class="was-hole" data-index="9"></div>
+      <div class="was-hole" data-index="10"></div>
+      <div class="was-hole" data-index="11"></div>
+      <div class="was-hole" data-index="12"></div>
+      <div class="was-hole" data-index="13"></div>
+      <div class="was-hole" data-index="14"></div>
+      <div class="was-hole" data-index="15"></div>
+    </div>
+
+    <div id="was-result" class="hidden">
+      <p id="was-result-text" class="gate-text"></p>
+      <p id="was-highscore-text" class="gate-text"></p>
+      <div id="was-result-buttons">
+        <button id="was-play-again" class="menu-btn">play again</button>
+        <button id="was-back-to-menu" class="menu-btn">back to menu</button>
+      </div>
+    </div>
+  </div>
+
+</div>

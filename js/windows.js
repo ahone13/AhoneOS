@@ -495,6 +495,15 @@ document.querySelectorAll('.desktop-icon').forEach(function(icon) {
       content.innerHTML = html;
       initHoneyNet(content);
     });
+  
+  fetch('sections/games.html')
+    .then(response => response.text())
+    .then(function(html) {
+      const content = document.querySelector('#window-games .window-content');
+      if (!content) return;
+      content.innerHTML = html;
+      initGamesWindow(content);
+    });
 
   // --- DESELECT ICONS ON EMPTY CLICK ---
 document.querySelector('.desktop').addEventListener('click', function(e) {

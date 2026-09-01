@@ -1,0 +1,225 @@
+.window-content {
+  height: 100%;
+}
+
+.game-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  height: 100%;
+  font-family: 'VCR OSD Mono', monospace;
+  position: relative;
+}
+
+.gate-text {
+  font-size: 17px;
+  margin-bottom: 28px;
+  line-height: 1.5;
+  max-width: 480px;
+}
+
+#gate-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#gate-buttons.hidden {
+  display: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.gate-btn {
+  font-family: 'VCR OSD Mono', monospace;
+  background: #ffd9ec;
+  border: 2px solid #ff8fc7;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.gate-btn:hover {
+  background: #ff8fc7;
+}
+
+.gate-sparkle {
+  position: absolute;
+  color: #ff8fc7;
+  font-size: 18px;
+  pointer-events: none;
+}
+
+.sparkle-1 { top: 30px; left: 15%; }
+.sparkle-2 { top: 60px; right: 12%; font-size: 14px; }
+.sparkle-3 { bottom: 40px; left: 20%; font-size: 12px; }
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+#menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-btn {
+  font-family: 'VCR OSD Mono', monospace;
+  background: #ffd9ec;
+  border: 2px solid #ff8fc7;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.menu-btn:hover:not(:disabled) {
+  background: #ff8fc7;
+}
+
+.menu-btn-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.menu-title {
+  font-family: 'VCR OSD Mono', monospace;
+  font-size: 22px;
+  margin-bottom: 24px;
+  color: #ff5fa8;
+}
+
+#menu-cards {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.menu-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 130px;
+  height: 130px;
+  background: #fff5fa;
+  border: 3px solid #ff8fc7;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: 'VCR OSD Mono', monospace;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.menu-card:hover {
+  transform: translateY(-4px) scale(1.03);
+  background: #ffd9ec;
+  box-shadow: 0 6px 12px rgba(255, 95, 168, 0.35);
+}
+
+.menu-card-icon {
+  font-size: 32px;
+}
+
+.menu-card-label {
+  font-size: 14px;
+  text-align: center;
+}
+
+/*----- tic tac toe -------*/
+
+#ttt-board {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  grid-template-rows: repeat(3, 60px);
+  gap: 6px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.ttt-cell {
+  font-family: 'VCR OSD Mono', monospace;
+  font-size: 24px;
+  background: #fff5fa;
+  border: 2px solid #ff8fc7;
+  cursor: pointer;
+}
+
+.ttt-cell:hover:not(:disabled) {
+  background: #ffd9ec;
+}
+
+.ttt-cell:disabled {
+  cursor: default;
+}
+
+#ttt-result-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+#ttt-line {
+  position: absolute;
+  height: 4px;
+  background: #ff8fc7;
+  border-radius: 2px;
+  transform-origin: center;
+}
+
+/* Rows */
+.ttt-line-row0 { top: 30px; left: 0; width: 192px; }
+.ttt-line-row1 { top: 96px; left: 0; width: 192px; }
+.ttt-line-row2 { top: 162px; left: 0; width: 192px; }
+
+/* Columns */
+.ttt-line-col0 { top: 96px; left: 30px; width: 192px; transform: rotate(90deg); }
+.ttt-line-col1 { top: 96px; left: 96px; width: 192px; transform: rotate(90deg); }
+.ttt-line-col2 { top: 96px; left: 162px; width: 192px; transform: rotate(90deg); }
+
+/* Diagonals */
+.ttt-line-diag { top: 96px; left: 96px; width: 271px; transform: translate(-50%, -50%) rotate(45deg); }
+.ttt-line-anti { top: 96px; left: 96px; width: 271px; transform: translate(-50%, -50%) rotate(-45deg); }
+
+/* ---- whack-a-shroom ----*/
+
+#was-stats {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+  font-family: 'VCR OSD Mono', monospace;
+  font-size: 16px;
+}
+
+#was-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 60px);
+  grid-template-rows: repeat(4, 60px);
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.was-hole {
+  width: 60px;
+  height: 60px;
+  background: #fff5fa;
+  border: 2px solid #ff8fc7;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.was-hole img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
