@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Favorites Layout Tool</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Courier New', monospace;
+    background: #ffe4f2;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ---------- SIDEBAR ---------- */
+  #sidebar {
+    width: 300px;
+    flex-shrink: 0;
+    background: #fff5fa;
+    border-right: 3px solid #ff8fc7;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  #sidebar h1 {
+    font-size: 15px;
+    padding: 14px;
+    background: #ff8fc7;
+    color: white;
+  }
+
+  #category-tabs {
+    display: flex;
+    border-bottom: 2px solid #ff8fc7;
+  }
+
+  .tab-btn {
+    flex: 1;
+    padding: 10px 4px;
+    font-size: 11px;
+    background: #ffd9ec;
+    border: none;
+    border-right: 1px solid #ff8fc7;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .tab-btn.active {
+    background: #fff5fa;
+    font-weight: bold;
+  }
+
+  .tab-btn:last-child { border-right: none; }
+
+  #progress {
+    padding: 8px 14px;
+    font-size: 12px;
+    color: #ff5fa8;
+    border-bottom: 2px solid #ff8fc7;
+  }
+
+  #palette {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-content: flex-start;
+  }
+
+  .palette-item {
+    width: 70px;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    padding: 4px;
+  }
+
+  .palette-item:hover {
+    border-color: #ff8fc7;
+    background: #ffd9ec;
+  }
+
+  .palette-item img {
+    width: 100%;
+    height: 50px;
+    object-fit: contain;
+    pointer-events: none;
+  }
+
+  .palette-item span {
+    font-size: 8px;
+    display: block;
+    word-break: break-all;
+    margin-top: 2px;
+    color: #555;
+  }
+
+  /* ---------- SELECTED ITEM CONTROLS ---------- */
+  #controls {
+    border-top: 3px solid #ff8fc7;
+    padding: 12px;
+    font-size: 12px;
+    background: #ffd9ec;
+    min-height: 150px;
+  }
+
+  #controls.empty { color: #999; font-style: italic; }
+
+  #controls label {
+    display: block;
+    margin-top: 8px;
+    margin-bottom: 2px;
+  }
+
+  #controls input[type="range"] {
+    width: 100%;
+  }
+
+  #controls-filename {
+    font-weight: bold;
+    color: #ff5fa8;
+    word-break: break-all;
+  }
+
+  .ctrl-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .ctrl-row button {
+    flex: 1;
+    font-family: inherit;
+    font-size: 11px;
+    padding: 6px;
+    background: #ff8fc7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .ctrl-row button.danger { background: #e05a8a; }
+
+  /* ---------- EXPORT ---------- */
+  #export-section {
+    border-top: 3px solid #ff8fc7;
+    padding: 12px;
+    background: #fff5fa;
+  }
+
+  #export-section button {
+    width: 100%;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 13px;
+    background: #ff5fa8;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 6px;
+  }
+
+  #export-status {
+    font-size: 11px;
+    color: #ff5fa8;
+    text-align: center;
+    min-height: 14px;
+  }
+
+  /* ---------- CANVAS ---------- */
+  #canvas-wrapper {
+    flex: 1;
+    overflow: auto;
+    background: #ccc;
+    position: relative;
+  }
+
+  #canvas {
+    position: relative;
+    background: #d9a86c;
+  }
+
+  #board-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .placed-item {
+    position: absolute;
+    cursor: grab;
+    user-select: none;
+    transform-origin: center center;
+  }
+
+  .placed-item img {
+    display: block;
+    width: 90px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .placed-item.selected img {
+    outline: 2px dashed #ff5fa8;
+    outline-offset: 3px;
+  }
+
+  .placed-item.dragging {
+    cursor: grabbing;
+    z-index: 9999 !important;
+  }
+</style>
+</head>
+<body>
+
+<div id="sidebar">
+  <h1>favorites layout tool</h1>
+
+  <div id="category-tabs"></div>
+  <div id="progress"></div>
+  <div id="palette"></div>
+
+  <div id="controls" class="empty">
+    click an item on the board to select it
+  </div>
+
+  <div id="export-section">
+    <button id="export-btn">copy layout as JSON</button>
+    <button id="clear-btn" style="background:#e05a8a;">clear all placements</button>
+    <div id="export-status"></div>
+  </div>
+</div>
+
+<div id="canvas-wrapper">
+  <div id="canvas">
+    <img id="board-bg" src="assets/images/favorites/corkboard.png" alt="corkboard">
+  </div>
+</div>
+
+<script>
+  const ASSET_PATH = 'assets/images/favorites/';
+  const STORAGE_KEY = 'favLayoutTool';
+
+  // All 101 filenames, minus corkboard.png itself (used as the background)
+  const allFiles = [
+    "clip-1.png","clip-10.png","clip-11.png","clip-12.png","clip-13.png","clip-14.png","clip-15.png",
+    "clip-2.png","clip-3.png","clip-4.png","clip-5.png","clip-6.png","clip-7.png","clip-8.png","clip-9.png",
+    "corkboard-2.png","envelope.png","exclamation.png","film-strip.png",
+    "letter-a.png","letter-c.png","letter-e-1.png","letter-e.png","letter-i.png","letter-l.png",
+    "letter-n-1.png","letter-n-2.png","letter-n.png","letter-s-1.png","letter-s.png",
+    "letter-t-1.png","letter-t.png","letter-u.png","letter-v.png",
+    "paper-1.png","paper-2.png","paper-3.png","paper-4.png","paper-5.png","paper-6.png","paper-7.png",
+    "picture-animals.png","picture-baguette.png","picture-BH.png","picture-books-1.png","picture-books-2.png",
+    "picture-cat.png","picture-cmr-1.png","picture-cmr-2.png","picture-cmr-3.png","picture-cmr-4.png",
+    "picture-cmr-5.png","picture-cmr-6.png","picture-cmr-7.png","picture-cmr-8.png","picture-cmr-9.png",
+    "picture-corn-plum.png","picture-daisies.png","picture-eru.png","picture-headphones.png",
+    "picture-hello-kitty.png","picture-jollof.png","picture-kati-kati.png","picture-koki.png",
+    "picture-lily-2.png","picture-lily.png","picture-mango.png","picture-me-1.png","picture-milkshake.png",
+    "picture-moss.png","picture-ndole.png","picture-poisson.png","picture-soya-1.png","picture-soya-2.png",
+    "picture-soya-3.png","post-it-1.png","post-it-2.png","push-pin.png",
+    "sticky-note-1.png","sticky-note-10.png","sticky-note-11.png","sticky-note-2.png","sticky-note-3.png",
+    "sticky-note-4.png","sticky-note-5.png","sticky-note-6.png","sticky-note-7.png","sticky-note-8.png",
+    "sticky-note-9.png","strawberries-orange.png","strawberries-red.png",
+    "tape-1.png","tape-2.png","tape-3.png","tape-4.png","tape-5.png","tape-6.png","tape-7.png","tape-8.png",
+    "vinyl.png"
+  ];
+
+  function categorize(filename) {
+    if (filename.startsWith('picture-')) return 'pictures';
+    if (filename.startsWith('sticky-note-') || filename.startsWith('post-it-')) return 'stickynotes';
+    return 'decorative';
+  }
+
+  const categories = {
+    pictures:    { label: 'Pictures',              files: [] },
+    stickynotes: { label: 'Sticky Notes & Post-its', files: [] },
+    decorative:  { label: 'Decorative',             files: [] }
+  };
+
+  allFiles.forEach(f => categories[categorize(f)].files.push(f));
+
+  let activeCategory = 'pictures';
+  let placed = {};   // filename -> { x, y, rotation, z }
+  let selected = null;
+  let zCounter = 1;
+  let minZCounter = 0;
+
+  // ---------- PERSISTENCE ----------
+  function saveState() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ placed, zCounter, minZCounter }));
+  }
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      placed = data.placed || {};
+      zCounter = data.zCounter || 1;
+      minZCounter = data.minZCounter || 0;
+    } catch (e) {
+      console.warn('Could not load saved layout:', e);
+    }
+  }
+
+  // ---------- CANVAS SETUP ----------
+  const canvas = document.getElementById('canvas');
+  const canvasWrapper = document.getElementById('canvas-wrapper');
+  const boardBg = document.getElementById('board-bg');
+  boardBg.src = ASSET_PATH + 'corkboard.png';
+
+  boardBg.onload = () => {
+    canvas.style.width  = boardBg.naturalWidth + 'px';
+    canvas.style.height = boardBg.naturalHeight + 'px';
+  };
+  boardBg.onerror = () => {
+    // Fallback size if corkboard.png fails to load, so the tool is still usable
+    canvas.style.width  = '1800px';
+    canvas.style.height = '1200px';
+    console.warn('corkboard.png did not load — check ASSET_PATH / file name.');
+  };
+
+  // ---------- RENDER TABS ----------
+  const tabsContainer = document.getElementById('category-tabs');
+  Object.keys(categories).forEach(key => {
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (key === activeCategory ? ' active' : '');
+    btn.textContent = categories[key].label;
+    btn.dataset.cat = key;
+    btn.addEventListener('click', () => {
+      activeCategory = key;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderPalette();
+      renderProgress();
+    });
+    tabsContainer.appendChild(btn);
+  });
+
+  // ---------- RENDER PALETTE ----------
+  function renderPalette() {
+    const palette = document.getElementById('palette');
+    palette.innerHTML = '';
+    const files = categories[activeCategory].files;
+
+    files.forEach(filename => {
+      if (placed[filename]) return; // already on the board
+
+      const item = document.createElement('div');
+      item.className = 'palette-item';
+
+      const img = document.createElement('img');
+      img.src = ASSET_PATH + filename;
+
+      const label = document.createElement('span');
+      label.textContent = filename;
+
+      item.appendChild(img);
+      item.appendChild(label);
+
+      item.addEventListener('click', () => addToCanvas(filename));
+
+      palette.appendChild(item);
+    });
+  }
+
+  function renderProgress() {
+    const files = categories[activeCategory].files;
+    const placedCount = files.filter(f => placed[f]).length;
+    document.getElementById('progress').textContent =
+      `${categories[activeCategory].label}: ${placedCount} / ${files.length} placed`;
+  }
+
+  // ---------- ADD ITEM TO CANVAS ----------
+  function addToCanvas(filename) {
+    // Drop it roughly in the center of the current scroll view
+    const scrollX = canvasWrapper.scrollLeft;
+    const scrollY = canvasWrapper.scrollTop;
+    const viewW = canvasWrapper.clientWidth;
+    const viewH = canvasWrapper.clientHeight;
+
+    placed[filename] = {
+      x: scrollX + viewW / 2 - 45,
+      y: scrollY + viewH / 2 - 45,
+      rotation: Math.floor(Math.random() * 16) - 8, // slight random tilt to start
+      scale: 1,
+      z: zCounter++
+    };
+
+    saveState();
+    renderCanvasItem(filename);
+    renderPalette();
+    renderProgress();
+    selectItem(filename);
+  }
+
+  // ---------- RENDER A PLACED ITEM ----------
+  function renderCanvasItem(filename) {
+    let el = document.getElementById('item-' + cssSafe(filename));
+    if (el) el.remove();
+
+    const data = placed[filename];
+    el = document.createElement('div');
+    el.className = 'placed-item';
+    el.id = 'item-' + cssSafe(filename);
+    el.style.left = data.x + 'px';
+    el.style.top = data.y + 'px';
+    el.style.zIndex = data.z;
+    el.style.transform = `rotate(${data.rotation}deg) scale(${data.scale || 1})`;
+
+    const img = document.createElement('img');
+    img.src = ASSET_PATH + filename;
+    el.appendChild(img);
+
+    el.addEventListener('mousedown', (e) => startDrag(e, filename));
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectItem(filename);
+    });
+
+    canvas.appendChild(el);
+  }
+
+  function cssSafe(filename) {
+    return filename.replace(/[^a-zA-Z0-9]/g, '-');
+  }
+
+  function renderAllPlaced() {
+    Object.keys(placed).forEach(renderCanvasItem);
+  }
+
+  // ---------- DRAGGING ----------
+  let dragTarget = null;
+  let dragOffsetX = 0;
+  let dragOffsetY = 0;
+
+  function startDrag(e, filename) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    selectItem(filename);
+
+    dragTarget = filename;
+    const el = document.getElementById('item-' + cssSafe(filename));
+    el.classList.add('dragging');
+
+    const canvasRect = canvas.getBoundingClientRect();
+    dragOffsetX = e.clientX - canvasRect.left - placed[filename].x;
+    dragOffsetY = e.clientY - canvasRect.top - placed[filename].y;
+
+    // Bring to front while dragging
+    placed[filename].z = zCounter++;
+    el.style.zIndex = placed[filename].z;
+  }
+
+  document.addEventListener('mousemove', (e) => {
+    if (!dragTarget) return;
+
+    const canvasRect = canvas.getBoundingClientRect();
+    let newX = e.clientX - canvasRect.left - dragOffsetX;
+    let newY = e.clientY - canvasRect.top - dragOffsetY;
+
+    placed[dragTarget].x = newX;
+    placed[dragTarget].y = newY;
+
+    const el = document.getElementById('item-' + cssSafe(dragTarget));
+    el.style.left = newX + 'px';
+    el.style.top = newY + 'px';
+
+    if (selected === dragTarget) updateControlsReadout();
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!dragTarget) return;
+
+    const el = document.getElementById('item-' + cssSafe(dragTarget));
+    if (el) el.classList.remove('dragging');
+
+    saveState();
+    dragTarget = null;
+  });
+
+  function sendToBack(filename) {
+    const others = Object.keys(placed)
+      .filter(f => f !== filename)
+      .sort((a, b) => placed[a].z - placed[b].z);
+
+    const newOrder = [filename, ...others];
+
+    newOrder.forEach((f, index) => {
+      const z = index + 1; // z-index always starts at 1, above the board (z:0)
+      placed[f].z = z;
+      const el = document.getElementById('item-' + cssSafe(f));
+      if (el) el.style.zIndex = z;
+    });
+
+    zCounter = newOrder.length + 1; // keep future "bring to front" clicks above everything
+    saveState();
+  }
+
+  // ---------- SELECTION + CONTROLS ----------
+  function selectItem(filename) {
+    if (selected) {
+      const prevEl = document.getElementById('item-' + cssSafe(selected));
+      if (prevEl) prevEl.classList.remove('selected');
+    }
+
+    selected = filename;
+    const el = document.getElementById('item-' + cssSafe(filename));
+    if (el) el.classList.add('selected');
+
+    renderControls();
+  }
+
+  function renderControls() {
+    const controls = document.getElementById('controls');
+
+    if (!selected) {
+      controls.className = 'empty';
+      controls.textContent = 'click an item on the board to select it';
+      return;
+    }
+
+    controls.className = '';
+    const data = placed[selected];
+
+    controls.innerHTML = `
+      <div id="controls-filename">${selected}</div>
+      <div id="controls-readout" style="margin-top:4px;color:#555;">
+        x: ${Math.round(data.x)}, y: ${Math.round(data.y)}
+      </div>
+
+      <label>rotation: <span id="rot-value">${data.rotation}</span>&deg;</label>
+      <input type="range" id="rot-slider" min="-45" max="45" value="${data.rotation}">
+
+      <label>size: <span id="scale-value">${Math.round((data.scale || 1) * 100)}</span>%</label>
+      <input type="range" id="scale-slider" min="30" max="250" value="${Math.round((data.scale || 1) * 100)}">
+
+      <div class="ctrl-row">
+        <button id="bring-front-btn">bring to front</button>
+        <button id="send-back-btn">send to back</button>
+      </div>
+      <div class="ctrl-row">
+        <button id="remove-btn" class="danger">remove from board</button>
+      </div>
+    `;
+
+    document.getElementById('rot-slider').addEventListener('input', (e) => {
+      const val = parseInt(e.target.value);
+      placed[selected].rotation = val;
+      document.getElementById('rot-value').textContent = val;
+
+      const el = document.getElementById('item-' + cssSafe(selected));
+      el.style.transform = `rotate(${val}deg) scale(${placed[selected].scale || 1})`;
+      saveState();
+    });
+
+    document.getElementById('scale-slider').addEventListener('input', (e) => {
+      const val = parseInt(e.target.value) / 100;
+      placed[selected].scale = val;
+      document.getElementById('scale-value').textContent = Math.round(val * 100);
+
+      const el = document.getElementById('item-' + cssSafe(selected));
+      el.style.transform = `rotate(${placed[selected].rotation}deg) scale(${val})`;
+      saveState();
+    });
+
+    document.getElementById('bring-front-btn').addEventListener('click', () => {
+      placed[selected].z = zCounter++;
+      const el = document.getElementById('item-' + cssSafe(selected));
+      el.style.zIndex = placed[selected].z;
+      saveState();
+    });
+
+    document.getElementById('send-back-btn').addEventListener('click', () => {
+      sendToBack(selected);
+    });
+
+    document.getElementById('remove-btn').addEventListener('click', () => {
+      const el = document.getElementById('item-' + cssSafe(selected));
+      if (el) el.remove();
+      delete placed[selected];
+      selected = null;
+      saveState();
+      renderPalette();
+      renderProgress();
+      renderControls();
+    });
+  }
+
+  function updateControlsReadout() {
+    const readout = document.getElementById('controls-readout');
+    if (readout && selected) {
+      const data = placed[selected];
+      readout.textContent = `x: ${Math.round(data.x)}, y: ${Math.round(data.y)}`;
+    }
+  }
+
+  // Deselect when clicking empty canvas space
+  canvas.addEventListener('click', () => {
+    if (selected) {
+      const el = document.getElementById('item-' + cssSafe(selected));
+      if (el) el.classList.remove('selected');
+      selected = null;
+      renderControls();
+    }
+  });
+
+  // ---------- EXPORT ----------
+  document.getElementById('export-btn').addEventListener('click', () => {
+    const output = Object.keys(placed).map(filename => ({
+      filename,
+      x: Math.round(placed[filename].x),
+      y: Math.round(placed[filename].y),
+      rotation: placed[filename].rotation,
+      scale: placed[filename].scale || 1,
+      z: placed[filename].z
+    }));
+
+    const json = JSON.stringify(output, null, 2);
+    const status = document.getElementById('export-status');
+
+    navigator.clipboard.writeText(json).then(() => {
+      status.textContent = `copied ${output.length} items to clipboard!`;
+      setTimeout(() => status.textContent = '', 3000);
+    }).catch(() => {
+      // Fallback if clipboard permissions fail — dump to console instead
+      console.log(json);
+      status.textContent = 'copy failed — check console for JSON';
+    });
+  });
+
+  document.getElementById('clear-btn').addEventListener('click', () => {
+    if (!confirm('Clear ALL placed items? This cannot be undone.')) return;
+
+    placed = {};
+    selected = null;
+    zCounter = 1;
+    document.querySelectorAll('.placed-item').forEach(el => el.remove());
+    saveState();
+    renderPalette();
+    renderProgress();
+    renderControls();
+  });
+
+  // ---------- INIT ----------
+  loadState();
+  renderAllPlaced();
+  renderPalette();
+  renderProgress();
+  renderControls();
+</script>
+
+</body>
+</html>

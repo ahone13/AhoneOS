@@ -1,0 +1,13 @@
+# OS junk files
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.vscode/
+
+# Dev-only tools
+favorites-layout-tool.html
+
+# Future-proofing
+node_modules/
+.env
