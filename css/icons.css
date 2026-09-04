@@ -153,44 +153,44 @@
 }
 
 /* ----------------------------
-   TABLET / IPAD LAYOUT
+   TABLET & PHONE LAYOUT
+   Icons move near the taskbar so there's
+   no shared vertical space with the logo,
+   regardless of exact screen width.
    ---------------------------- */
 @media (max-width: 1024px) {
-  .desktop-icons {
-    grid-template-columns: repeat(3, 72px);
-    gap: 18px 12px;
-    left: 16px;
-  }
-
-  .desktop-icon {
-    width: 72px;
-  }
-
-  .desktop-icon img {
-    width: 44px;
-    height: 44px;
-  }
-}
-
-/* ----------------------------
-   PHONE LAYOUT
-   Icons move below the logo entirely,
-   near the taskbar, so there's no
-   shared vertical space to collide in.
-   ---------------------------- */
-@media (max-width: 600px) {
   .desktop-icons {
     top: auto;
     bottom: 90px;
     left: 12px;
-    grid-template-columns: repeat(3, 60px);
-    gap: 14px 10px;
+    grid-template-columns: repeat(3, 68px);
+    gap: 16px 12px;
     padding-bottom: 0;
   }
 
   .desktop-icon {
-    width: 60px;
+    width: 68px;
     padding: 4px;
+  }
+
+  .desktop-icon img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .desktop-icon span {
+    font-size: 0.58rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .desktop-icons {
+    grid-template-columns: repeat(3, 60px);
+    gap: 14px 10px;
+  }
+
+  .desktop-icon {
+    width: 60px;
   }
 
   .desktop-icon img {

@@ -22,17 +22,17 @@
   font-weight: bold;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1024px) {
   .os-logo {
-    top: 4%;
+    top: 6%;
   }
 
   .logo-img {
-    width: clamp(180px, 60vw, 400px);
+    width: clamp(200px, 55vw, 500px);
   }
 
   .logo-subtitle {
-    font-size: 0.55rem;
+    font-size: 0.6rem;
     letter-spacing: 2px;
   }
 }
