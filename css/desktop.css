@@ -37,6 +37,12 @@
   }
 }
 
+@media (min-width: 1025px) and (max-width: 1500px) {
+  .logo-img {
+    width: clamp(280px, 42vw, 500px);
+  }
+}
+
 /* ----------------------------
    DESIGN TOKENS (CSS Variables)
    Your entire color palette lives here.

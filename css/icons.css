@@ -202,3 +202,30 @@
     font-size: 0.55rem;
   }
 }
+
+/* ----------------------------
+   LANDSCAPE TABLET / SMALLER DESKTOP
+   Enough width for icons + logo side-by-side,
+   but needs a narrower icon grid (3 columns)
+   and a smaller logo cap to avoid collision.
+   ---------------------------- */
+@media (min-width: 1025px) and (max-width: 1500px) {
+  .desktop-icons {
+    grid-template-columns: repeat(3, 64px);
+    gap: 14px 12px;
+    left: 16px;
+  }
+
+  .desktop-icon {
+    width: 64px;
+  }
+
+  .desktop-icon img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .desktop-icon span {
+    font-size: 0.58rem;
+  }
+}
