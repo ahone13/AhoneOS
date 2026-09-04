@@ -22,6 +22,21 @@
   font-weight: bold;
 }
 
+@media (max-width: 600px) {
+  .os-logo {
+    top: 4%;
+  }
+
+  .logo-img {
+    width: clamp(180px, 60vw, 400px);
+  }
+
+  .logo-subtitle {
+    font-size: 0.55rem;
+    letter-spacing: 2px;
+  }
+}
+
 /* ----------------------------
    DESIGN TOKENS (CSS Variables)
    Your entire color palette lives here.

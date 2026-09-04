@@ -151,3 +151,54 @@
     change = feels very alive and responsive.
   */
 }
+
+/* ----------------------------
+   TABLET / IPAD LAYOUT
+   ---------------------------- */
+@media (max-width: 1024px) {
+  .desktop-icons {
+    grid-template-columns: repeat(3, 72px);
+    gap: 18px 12px;
+    left: 16px;
+  }
+
+  .desktop-icon {
+    width: 72px;
+  }
+
+  .desktop-icon img {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* ----------------------------
+   PHONE LAYOUT
+   Icons move below the logo entirely,
+   near the taskbar, so there's no
+   shared vertical space to collide in.
+   ---------------------------- */
+@media (max-width: 600px) {
+  .desktop-icons {
+    top: auto;
+    bottom: 90px;
+    left: 12px;
+    grid-template-columns: repeat(3, 60px);
+    gap: 14px 10px;
+    padding-bottom: 0;
+  }
+
+  .desktop-icon {
+    width: 60px;
+    padding: 4px;
+  }
+
+  .desktop-icon img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .desktop-icon span {
+    font-size: 0.55rem;
+  }
+}
