@@ -163,13 +163,13 @@
     top: auto;
     bottom: 90px;
     left: 12px;
-    grid-template-columns: repeat(3, 68px);
+    grid-template-columns: repeat(3, 72px);
     gap: 16px 12px;
     padding-bottom: 0;
   }
 
   .desktop-icon {
-    width: 68px;
+    width: 72px;
     padding: 4px;
   }
 
@@ -185,12 +185,12 @@
 
 @media (max-width: 600px) {
   .desktop-icons {
-    grid-template-columns: repeat(3, 60px);
+    grid-template-columns: repeat(3, 68px);
     gap: 14px 10px;
   }
 
   .desktop-icon {
-    width: 60px;
+    width: 68px;
   }
 
   .desktop-icon img {
@@ -211,13 +211,13 @@
    ---------------------------- */
 @media (min-width: 1025px) and (max-width: 1500px) {
   .desktop-icons {
-    grid-template-columns: repeat(3, 64px);
+    grid-template-columns: repeat(3, 72px);
     gap: 14px 12px;
     left: 16px;
   }
 
   .desktop-icon {
-    width: 64px;
+    width: 72px;
   }
 
   .desktop-icon img {
