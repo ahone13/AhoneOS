@@ -92,6 +92,7 @@
    Pink gradient + optional glitter overlay.
    ---------------------------- */
 .window-titlebar {
+  touch-action: none;
   display: flex;
   align-items: center;
   justify-content: space-between;

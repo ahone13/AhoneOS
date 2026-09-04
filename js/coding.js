@@ -12,10 +12,10 @@ const codingProjectData = {
     status: 'In Progress',
     year: '2026',
     vibe: 'the project that ate my life',
-    link: null, // add your repo URL here once it's public
+    link: 'https://ahone13.github.io/AhoneOS/',
     description: 'A personal portfolio site built as a fictional Y2K/Windows XP-style desktop operating system, complete with draggable windows, a taskbar, hand-drawn art andpixel art throughout.',
     tech: 'HTML, CSS, JavaScript',
-    proud: 'Literally all of it - every window is handmade, down to the pixel icons.',
+    proud: 'Literally all of it : every window is handmade, down to the pixel icons.',
     devNote: 'You\'re looking at it diva. Meta.',
   },
 };

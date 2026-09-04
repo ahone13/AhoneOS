@@ -282,6 +282,53 @@ document.addEventListener('mouseup', function() {
   dragTarget = null;
 });
 
+// --- TOUCH DRAGGING (mirrors mouse dragging above) ---
+
+document.addEventListener('touchstart', function(e) {
+  const titlebar = e.target.closest('.window-titlebar');
+  if (!titlebar) return;
+  if (e.target.closest('.window-btn')) return;
+
+  const win = titlebar.closest('.window');
+  if (!win) return;
+
+  if (win.classList.contains('maximized')) return;
+
+  const touch = e.touches[0];
+
+  isDragging  = true;
+  dragTarget  = win;
+
+  const rect  = win.getBoundingClientRect();
+  dragOffsetX = touch.clientX - rect.left;
+  dragOffsetY = touch.clientY - rect.top;
+
+  focusWindow(win);
+}, { passive: true });
+
+document.addEventListener('touchmove', function(e) {
+  if (!isDragging || !dragTarget) return;
+
+  const touch = e.touches[0];
+
+  let newX = touch.clientX - dragOffsetX;
+  let newY = touch.clientY - dragOffsetY;
+
+  newX = Math.max(0, Math.min(newX, window.innerWidth  - dragTarget.offsetWidth));
+  newY = Math.max(0, Math.min(newY, window.innerHeight - dragTarget.offsetHeight - 36));
+
+  dragTarget.style.left = newX + 'px';
+  dragTarget.style.top  = newY + 'px';
+
+  e.preventDefault(); // stop the page itself from scrolling while dragging
+}, { passive: false });
+
+document.addEventListener('touchend', function() {
+  if (!isDragging) return;
+
+  isDragging = false;
+  dragTarget = null;
+});
 
 // --- BUTTON EVENT LISTENERS ---
 document.querySelectorAll('.close-btn').forEach(function(btn) {
