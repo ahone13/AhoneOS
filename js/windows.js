@@ -233,6 +233,8 @@ let dragOffsetX = 0;
 let dragOffsetY = 0;
 
 document.addEventListener('mousedown', function(e) {
+  if (window.innerWidth <= 600) return; // no dragging on phones
+
   const titlebar = e.target.closest('.window-titlebar');
   if (!titlebar) return;
   if (e.target.closest('.window-btn')) return;
@@ -240,7 +242,6 @@ document.addEventListener('mousedown', function(e) {
   const win = titlebar.closest('.window');
   if (!win) return;
 
-  // Don't drag if maximized
   if (win.classList.contains('maximized')) return;
 
   isDragging  = true;
@@ -285,6 +286,8 @@ document.addEventListener('mouseup', function() {
 // --- TOUCH DRAGGING (mirrors mouse dragging above) ---
 
 document.addEventListener('touchstart', function(e) {
+  if (window.innerWidth <= 600) return; // no dragging on phones
+
   const titlebar = e.target.closest('.window-titlebar');
   if (!titlebar) return;
   if (e.target.closest('.window-btn')) return;
