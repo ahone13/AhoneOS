@@ -12,26 +12,35 @@ function initGamesWindow(content) {
 
   const buttons = content.querySelectorAll('.gate-btn');
 
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const choice = btn.dataset.choice;
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const choice = btn.dataset.choice;
 
-      gateQuestion.classList.add('hidden');
-      gateButtons.classList.add('hidden');
-      gateResponse.textContent = responses[choice];
-      gateResponse.classList.remove('hidden');
+        gateQuestion.classList.add('hidden');
+        gateButtons.classList.add('hidden');
+        gateResponse.textContent = responses[choice];
+        gateResponse.classList.remove('hidden');
 
-      setTimeout(() => {
-        gateScreen.classList.add('fade-out');
+        if (choice === 'mistake') {
+          // Serious person — close the window instead of continuing to the menu
+          setTimeout(() => {
+            const gamesWindow = content.closest('.window');
+            if (gamesWindow) closeWindow(gamesWindow.id);
+          }, 1400);
+          return;
+        }
 
         setTimeout(() => {
-          gateScreen.classList.add('hidden');
-          menuScreen.classList.remove('hidden');
-        }, 400);
+          gateScreen.classList.add('fade-out');
 
-      }, 1200);
+          setTimeout(() => {
+            gateScreen.classList.add('hidden');
+            menuScreen.classList.remove('hidden');
+          }, 400);
+
+        }, 1200);
+      });
     });
-  });
 
     // ----- Tic Tac Toe -----
     const tttScreen = content.querySelector('#tictactoe-screen');

@@ -275,6 +275,7 @@
   /* Custom scrollbar to match the aesthetic */
   scrollbar-width: thin;
   scrollbar-color: var(--pink-primary) var(--cream);
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Chrome/Safari scrollbar styling */
@@ -310,4 +311,10 @@
   .window-titlebar {
     cursor: default;
   }
+}
+
+button {
+  color: var(--pixel-dark);
+  -webkit-appearance: none;
+  appearance: none;
 }
