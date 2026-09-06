@@ -43,6 +43,14 @@
   }
 }
 
+@media (max-width: 600px) {
+  .logo-subtitle {
+    font-size: 0.5rem;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+}
+
 /* ----------------------------
    DESIGN TOKENS (CSS Variables)
    Your entire color palette lives here.

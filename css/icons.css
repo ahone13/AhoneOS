@@ -186,12 +186,12 @@
   .desktop-icons {
     top: 30%;
     left: 10px;
-    grid-template-columns: repeat(4, 58px);
+    grid-template-columns: repeat(4, 66px);
     gap: 12px 8px;
   }
 
   .desktop-icon {
-    width: 58px;
+    width: 66px;
   }
 
   .desktop-icon img {
@@ -200,7 +200,7 @@
   }
 
   .desktop-icon span {
-    font-size: 0.5rem;
+    font-size: 0.48rem;
   }
 }
 
