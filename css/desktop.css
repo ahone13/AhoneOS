@@ -87,25 +87,12 @@
    ---------------------------- */
 .desktop {
   width: 100vw;
-  /*
-    vw = viewport width. 100vw = full browser window width.
-    vh = viewport height. 100vh = full browser window height.
-    These are more reliable than 100% for full-screen layouts.
-  */
   height: 100vh;
+  height: 100dvh;
   position: relative;
-  /*
-    position: relative here is important. It makes .desktop
-    the "anchor point" for anything inside it that uses
-    position: absolute. We'll use this for icons and windows.
-  */
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  /*
-    Flexbox with column direction stacks children vertically.
-    Sky on top, ground on bottom.
-  */
 }
 
 
