@@ -77,6 +77,9 @@
   /* Font stack — placeholder until we find your perfect font */
   --font-pixel: 'Courier New', monospace;  
   --font-ui:        'Segoe UI', Arial, sans-serif;
+
+  /* other stuff */
+  --taskbar-height: 38px;
 }
 
 

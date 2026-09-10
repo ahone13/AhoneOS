@@ -251,6 +251,7 @@
 .window.maximized {
   border-radius: 0;
   box-shadow: none;
+  border: none;
 }
 
 /* ----------------------------
@@ -301,8 +302,8 @@
 @media (max-width: 600px) {
   .window {
     width: 100vw !important;
-    height: calc(100vh - 40px) !important;
-    height: calc(100dvh - 40px) !important;
+    height: calc(100vh - var(--taskbar-height)) !important;
+    height: calc(100dvh - var(--taskbar-height)) !important;
     top: 0 !important;
     left: 0 !important;
     border: none;

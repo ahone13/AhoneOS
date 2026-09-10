@@ -79,23 +79,13 @@ function toggleMaximize(windowId) {
     win.style.left   = win.dataset.prevLeft   || '60px';
     win.style.width  = win.dataset.prevWidth  || '480px';
     win.style.height = win.dataset.prevHeight || '520px';
-    /*
-      dataset.prevTop etc. are custom data attributes
-      we saved on the element before maximizing.
-      This is how we "remember" where the window was.
-    */
-
+   
     // Update button label
     const btn = win.querySelector('.maximize-btn');
     if (btn) btn.textContent = '□';
 
   } else {
-    // Not maximized → save current state, then maximize
-
-    // Read the window's ACTUAL rendered size (works whether the size
-    // came from inline styles or an external stylesheet), instead of
-    // only checking win.style — which stays blank when sizing comes
-    // from CSS rules like our #window-gallery selector.
+    
     const rect = win.getBoundingClientRect();
     win.dataset.prevTop    = win.style.top    || win.offsetTop + 'px';
     win.dataset.prevLeft   = win.style.left   || win.offsetLeft + 'px';
@@ -108,13 +98,8 @@ function toggleMaximize(windowId) {
     win.style.top    = '0px';
     win.style.left   = '0px';
     win.style.width  = '100vw';
-    win.style.height = 'calc(100vh - 36px)';
-    /*
-      calc() lets us do math with mixed units.
-      100vh = full screen height.
-      Minus 36px = the taskbar height.
-      So the window fills everything above the taskbar.
-    */
+    win.style.height = 'calc(100vh - var(--taskbar-height))';
+  
 
     // Update button label to show it can be restored
     const btn = win.querySelector('.maximize-btn');
